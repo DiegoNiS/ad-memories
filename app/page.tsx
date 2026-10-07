@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import BackgroundPattern from '@/components/BackgroundPattern';
 import Envelope from '@/components/Envelope';
 import LoveLetter from '@/components/LoveLetter';
-import FutureList from '@/components/FutureList';
 import PhotoAlbum from '@/components/PhotoAlbum';
 import FirstCounter from '@/components/FirstCounter';
 import ClimaxCountdown from '@/components/ClimaxCountdown';
@@ -14,9 +13,10 @@ import FinalCelebration from '@/components/FinalCelebration';
 
 export default function Home() {
   const [step, setStep] = useState<number>(1);
+  const [isClimaxDone, setIsClimaxDone] = useState<boolean>(false);
 
   const nextStep = () => {
-    setStep((prev) => prev + 1);
+    setStep((prev) => Math.min(prev + 1, 6));
   };
 
   return (
@@ -24,7 +24,7 @@ export default function Home() {
       {/* Background pattern - Easter egg letter D, birds, flowers, Pompompurin */}
       <BackgroundPattern />
 
-      {/* Container with AnimatePresence transitions */}
+      {/* Main App Container */}
       <div className="w-full max-w-lg min-h-[100dvh] flex flex-col items-center justify-center relative z-10">
         <AnimatePresence mode="wait">
           {step === 1 && (
@@ -62,39 +62,26 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="w-full"
             >
-              <FutureList onNext={nextStep} />
-            </motion.div>
-          )}
-
-          {step === 4 && (
-            <motion.div
-              key="step-4"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.05 }}
-              transition={{ duration: 0.5 }}
-              className="w-full"
-            >
               <PhotoAlbum onNext={nextStep} />
             </motion.div>
           )}
 
-          {step === 5 && (
+          {step === 4 && !isClimaxDone && (
             <motion.div
-              key="step-5"
+              key="step-4-counter"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 1.05 }}
               transition={{ duration: 0.5 }}
               className="w-full"
             >
-              <FirstCounter onNext={nextStep} />
+              <FirstCounter onNext={() => setIsClimaxDone(true)} />
             </motion.div>
           )}
 
-          {step === 6 && (
+          {step === 4 && isClimaxDone && (
             <motion.div
-              key="step-6"
+              key="step-4-climax"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -105,12 +92,12 @@ export default function Home() {
             </motion.div>
           )}
 
-          {step === 7 && (
+          {step === 5 && (
             <motion.div
-              key="step-7"
+              key="step-5"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.6 } }}
               transition={{ duration: 0.5 }}
               className="w-full"
             >
@@ -118,9 +105,9 @@ export default function Home() {
             </motion.div>
           )}
 
-          {step === 8 && (
+          {step === 6 && (
             <motion.div
-              key="step-8"
+              key="step-6"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7 }}
