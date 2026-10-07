@@ -30,7 +30,7 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
         setIsCompleted(true);
         clearInterval(timer);
       }
-    }, 28); // 28ms per character reveal
+    }, 28); // Typewriter speed
 
     return () => clearInterval(timer);
   }, []);
@@ -49,11 +49,11 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
       className="flex flex-col items-center justify-between w-full max-w-md mx-auto h-[90dvh] pt-[env(safe-area-inset-top,20px)] pb-[env(safe-area-inset-bottom,20px)] px-4 select-none"
     >
       {/* Top Header */}
-      <div className="w-full flex items-center justify-between py-2">
+      <div className="w-full flex items-center justify-between py-2 border-b border-[#D4AF37]/20 pb-2">
         <div className="flex items-center space-x-2">
           <Heart className="w-5 h-5 text-[#D4AF37] fill-[#D4AF37]" />
-          <span className="font-serif-title text-[#4A3B32] font-semibold text-lg">
-            Para Mi Princesita
+          <span className="font-cursive text-[#4A3B32] font-bold text-2xl sm:text-3xl tracking-wide">
+            De Diego Para Angeles
           </span>
         </div>
 
@@ -75,10 +75,10 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
         <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#D4AF37]/60 rounded-bl" />
         <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#D4AF37]/60 rounded-br" />
 
-        {/* Scrollable Letter Content */}
+        {/* Scrollable Cursive Letter Content */}
         <div
           ref={letterRef}
-          className="flex-1 p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-[#D4AF37]/30 text-[#4A3B32] font-sans text-base leading-relaxed tracking-wide"
+          className="flex-1 p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-[#D4AF37]/30 text-[#4A3B32] font-cursive text-xl sm:text-2xl leading-relaxed tracking-wide space-y-4"
         >
           <p className="whitespace-pre-line font-medium">
             {displayedText}
@@ -86,10 +86,21 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
               <motion.span
                 animate={{ opacity: [0, 1, 0] }}
                 transition={{ duration: 0.8, repeat: Infinity }}
-                className="inline-block ml-0.5 w-2 h-4 bg-[#D4AF37] align-middle"
+                className="inline-block ml-1 w-2 h-5 bg-[#D4AF37] align-middle"
               />
             )}
           </p>
+
+          {isCompleted && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="pt-4 text-right font-cursive text-2xl text-[#D4AF37] font-bold"
+            >
+              ~ Con todo mi amor, Diego ❤️
+            </motion.div>
+          )}
         </div>
       </div>
 
@@ -105,7 +116,7 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
               onClick={onNext}
               className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#4A3B32] to-[#634E43] text-white font-serif-title font-semibold text-base shadow-xl flex items-center justify-center space-x-2 border border-[#D4AF37]/40 cursor-pointer"
             >
-              <span>Ver Nuestro Álbum</span>
+              <span>Ver Nuestros Sueños</span>
               <ChevronRight className="w-5 h-5 text-[#D4AF37]" />
             </motion.button>
           )}
