@@ -30,13 +30,13 @@ const PERSISTENCE_MESSAGES = [
 
 export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) => {
   const [noCount, setNoCount] = useState(0);
-  const [isRevealed, setIsRevealed] = useState(false);
+  const [showQuestionAndButtons, setShowQuestionAndButtons] = useState(false);
 
-  // 2-second delay reveal timer to let the romantic ambiance settle before showing interactive buttons
+  // Timed Sequence: 4 seconds for top crest, then proposal question & buttons slowly fade in
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsRevealed(true);
-    }, 2000);
+      setShowQuestionAndButtons(true);
+    }, 4000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -54,77 +54,93 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.6 } }}
       transition={{ duration: 0.8 }}
-      className="fixed inset-0 z-50 bg-[#FDFFF0] flex flex-col justify-between min-h-[100dvh] h-[100dvh] pt-14 sm:pt-16 pb-24 sm:pb-28 px-6 select-none overflow-hidden"
+      className="fixed inset-0 z-50 bg-[#FDFFF0] flex flex-col justify-between min-h-[100dvh] h-[100dvh] pt-20 sm:pt-24 pb-32 sm:pb-36 px-6 select-none overflow-hidden"
     >
       {/* Falling Autumn Leaves particle system in background */}
       <FallingLeaves />
 
-      {/* Top Header: Sophisticated Crest with Gold Filigree, Stars, and Initials (D & A) */}
-      <div className="w-full flex flex-col items-center pt-1 z-10 space-y-1.5">
+      {/* 1. TOP HEADER: Appears slightly first */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 0.95, y: 0 }}
+        transition={{ duration: 1.2, delay: 0.3 }}
+        className="w-full flex flex-col items-center z-10 space-y-1.5"
+      >
         <div className="flex items-center space-x-3 opacity-70">
-          <div className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#D4AF37]" />
+          <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-[#D4AF37]" />
           <div className="flex items-center space-x-1.5 text-[#D4AF37]">
-            <Star className="w-3 h-3 fill-[#D4AF37]" />
-            <span className={`${fontGreatVibes.className} text-xl text-[#4A3B32] font-bold tracking-widest`}>
+            <Star className="w-3.5 h-3.5 fill-[#D4AF37]" />
+            <span className={`${fontGreatVibes.className} text-2xl text-[#6D5245] font-bold tracking-widest`}>
               D &amp; A
             </span>
-            <Star className="w-3 h-3 fill-[#D4AF37]" />
+            <Star className="w-3.5 h-3.5 fill-[#D4AF37]" />
           </div>
-          <div className="w-10 h-[1px] bg-gradient-to-l from-transparent to-[#D4AF37]" />
+          <div className="w-12 h-[1px] bg-gradient-to-l from-transparent to-[#D4AF37]" />
         </div>
-        <p className={`${fontGreatVibes.className} text-xl text-[#D4AF37] font-semibold tracking-wide text-center drop-shadow-xs`}>
+        <p className={`${fontGreatVibes.className} text-2xl text-[#D4AF37] font-semibold tracking-wide text-center drop-shadow-xs`}>
           Te elijo a ti, todos los días de mi vida ❤️
         </p>
-      </div>
+      </motion.div>
 
-      {/* Middle Center Section: Lowered Proposal Question & Header (Perfectly Balanced Spacing) */}
-      <div className="w-full max-w-sm mx-auto flex flex-col items-center justify-center my-auto z-10 text-center space-y-3 py-1">
-        {/* Animated Heart Icon Badge */}
-        <motion.div
-          animate={{ scale: [1, 1.14, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="inline-flex items-center justify-center text-[#D4AF37] mb-0.5"
-        >
-          <Heart className="w-10 h-10 fill-[#D4AF37]" />
-        </motion.div>
-
-        {/* Header Text: "Angeles mi amor..." */}
-        <h1 className={`${fontPlayfair.className} text-3xl sm:text-4xl font-extrabold text-[#4A3B32] tracking-wide`}>
-          Angeles mi amor...
-        </h1>
-
-        {/* Proposal Question: "¿Quieres ser mi novia?" */}
-        <h2 className={`${fontPlayfair.className} text-3xl sm:text-4xl font-extrabold text-[#D4AF37] tracking-wider`}>
-          ¿Quieres ser mi novia?
-        </h2>
-
-        {/* Floating Persistence Messages space container */}
-        <div className="w-full h-12 flex items-center justify-center pt-1">
-          <AnimatePresence mode="wait">
-            {currentMessageIndex >= 0 && (
-              <motion.p
-                key={currentMessageIndex}
-                initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.96 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-                className={`${fontPlayfair.className} text-lg sm:text-xl font-bold text-[#4A3B32] italic leading-snug drop-shadow-xs`}
-              >
-                &ldquo;{PERSISTENCE_MESSAGES[currentMessageIndex]}&rdquo;
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Bottom Interactive Section: Revealed smoothly after 2 seconds */}
-      <div className="w-full max-w-xs mx-auto z-20 pb-1 relative flex flex-col items-center min-h-[140px] justify-end">
+      {/* 2. PROPOSAL QUESTION SECTION: Positioned above center, fades in after 4 seconds */}
+      <div className="w-full max-w-sm mx-auto flex flex-col items-center text-center space-y-2 z-10 pt-4 pb-2">
         <AnimatePresence>
-          {isRevealed && (
+          {showQuestionAndButtons && (
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="flex flex-col items-center space-y-2"
+            >
+              {/* Animated Heart Icon Badge */}
+              <motion.div
+                animate={{ scale: [1, 1.14, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="inline-flex items-center justify-center text-[#D4AF37] mb-0.5"
+              >
+                <Heart className="w-10 h-10 fill-[#D4AF37]" />
+              </motion.div>
+
+              {/* Header Text: "Angeles mi amor..." */}
+              <h1 className={`${fontPlayfair.className} text-3xl sm:text-4xl font-extrabold text-[#5C4538] tracking-wide`}>
+                Angeles mi amor...
+              </h1>
+
+              {/* Proposal Question: "¿Quieres ser mi novia?" */}
+              <h2 className={`${fontPlayfair.className} text-3xl sm:text-4xl font-extrabold text-[#D4AF37] tracking-wider`}>
+                ¿Quieres ser mi novia?
+              </h2>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* 3. PERSISTENCE MESSAGES: Perfectly positioned in the gap between proposal question and bottom buttons */}
+      <div className="w-full max-w-sm mx-auto my-auto flex items-center justify-center px-4 text-center z-10 min-h-[50px]">
+        <AnimatePresence mode="wait">
+          {currentMessageIndex >= 0 && (
+            <motion.p
+              key={currentMessageIndex}
+              initial={{ opacity: 0, y: 8, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.97 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+              className={`${fontPlayfair.className} text-xl sm:text-2xl font-semibold text-[#6D5245] italic leading-snug drop-shadow-xs`}
+            >
+              {PERSISTENCE_MESSAGES[currentMessageIndex]}
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* 4. BOTTOM BUTTONS: Fades in after 4 seconds */}
+      <div className="w-full max-w-xs mx-auto z-20 relative flex flex-col items-center min-h-[130px] justify-end">
+        <AnimatePresence>
+          {showQuestionAndButtons && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
               className="w-full space-y-3 flex flex-col items-center"
             >
               {/* YES BUTTON - Vibrant Gold Gradient with Heart Icon */}
@@ -155,7 +171,7 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
               <motion.button
                 whileTap={{ scale: 0.92 }}
                 onClick={handleNoClick}
-                className="w-full py-3 px-6 rounded-xl text-[#4A3B32]/75 font-sans-ui font-semibold text-base border border-[#4A3B32]/15 cursor-pointer active:bg-[#4A3B32]/10 transition-colors text-center bg-white/40 backdrop-blur-xs"
+                className="w-full py-3 px-6 rounded-xl text-[#5C4538] font-sans-ui font-semibold text-base border border-[#5C4538]/20 cursor-pointer active:bg-[#4A3B32]/10 transition-colors text-center bg-white/50 backdrop-blur-xs"
               >
                 No
               </motion.button>
