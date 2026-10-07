@@ -155,54 +155,108 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
           <path d="M 0 40 Q 30 15 60 40 Q 90 20 120 40 Q 150 10 180 40 Q 270 15 300 40 Q 330 20 360 40 Q 380 10 400 40 Z" />
         </svg>
 
-        {/* 1. CINNAMOROLL (Same size w-20 h-20, raised by 12px (bottom-4) for grass clearance, fast teleport + center tilt wiggle) */}
-        <motion.div
-          animate={{
-            x: ["8vw", "8vw", "68vw", "68vw", "38vw", "38vw", "78vw", "78vw", "15vw", "15vw"],
-            opacity: [0, 0.95, 0, 0.95, 0, 0.95, 0, 0.95, 0, 0.95],
-            rotate: [-6, 6, -5, 5, -7, 7, -4, 4, -6, 6],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            rotate: { duration: 1.2, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" },
-            opacity: { duration: 10, repeat: Infinity, times: [0, 0.05, 0.22, 0.25, 0.47, 0.5, 0.72, 0.75, 0.97, 1] },
-          }}
-          style={{ transformOrigin: "center center" }}
-          className="w-20 h-20 absolute bottom-4 left-0 z-0 flex items-end justify-center"
-        >
-          <img
-            src="/extras/Cinnamoroll.png"
-            alt="Cinnamoroll"
-            className="w-full h-auto object-contain drop-shadow-md"
-          />
-        </motion.div>
-
-        {/* 2. POMPOMPURIN (Same size w-20 h-20, fast teleport + center tilt wiggle) */}
-        <motion.div
-          animate={{
-            x: ["72vw", "72vw", "18vw", "18vw", "58vw", "58vw", "22vw", "22vw", "62vw", "62vw"],
-            opacity: [0, 0.95, 0, 0.95, 0, 0.95, 0, 0.95, 0, 0.95],
-            rotate: [6, -6, 5, -5, 7, -7, 4, -4, 6, -6],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            delay: 1.1,
-            rotate: { duration: 1.2, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" },
-            opacity: { duration: 10, repeat: Infinity, times: [0, 0.05, 0.22, 0.25, 0.47, 0.5, 0.72, 0.75, 0.97, 1] },
-          }}
-          style={{ transformOrigin: "center center" }}
-          className="w-20 h-20 absolute bottom-1 left-0 z-0 flex items-end justify-center"
-        >
-          <img
-            src="/extras/Pompompurin.png"
-            alt="Pompompurin"
-            className="w-full h-auto object-contain drop-shadow-md"
-          />
-        </motion.div>
+        {/* Sanrio Teleporting Characters Component (Zero linear X movement, purely static placement + fade in/out + gentle center tilt) */}
+        <SanrioPopups />
       </div>
     </motion.div>
+  );
+};
+
+const SANRIO_POSITIONS = ["8vw", "72vw", "38vw", "18vw", "68vw", "28vw", "78vw", "48vw", "12vw", "58vw"];
+
+const SanrioPopups: React.FC = () => {
+  const [cinnamorollIndex, setCinnamorollIndex] = React.useState(0);
+  const [pompompurinIndex, setPompompurinIndex] = React.useState(1);
+  const [cinVisible, setCinVisible] = React.useState(true);
+  const [pomVisible, setPomVisible] = React.useState(true);
+
+  React.useEffect(() => {
+    // Cinnamoroll Teleport Timer: Fades out, changes X position instantly while invisible, then fades back in
+    const cinInterval = setInterval(() => {
+      setCinVisible(false);
+      setTimeout(() => {
+        setCinnamorollIndex((prev) => (prev + 2) % SANRIO_POSITIONS.length);
+        setCinVisible(true);
+      }, 350); // 350ms quick fade out before jumping
+    }, 4500);
+
+    // Pompompurin Teleport Timer: Fades out, changes X position instantly while invisible, then fades back in
+    const pomInterval = setInterval(() => {
+      setPomVisible(false);
+      setTimeout(() => {
+        setPompompurinIndex((prev) => (prev + 2 + 1) % SANRIO_POSITIONS.length);
+        setPomVisible(true);
+      }, 350);
+    }, 4800);
+
+    return () => {
+      clearInterval(cinInterval);
+      clearInterval(pomInterval);
+    };
+  }, []);
+
+  return (
+    <>
+      {/* 1. CINNAMOROLL - Stationary X position, gentle slow center tilt, zero linear movement */}
+      <AnimatePresence mode="wait">
+        {cinVisible && (
+          <motion.div
+            key={`cin-${cinnamorollIndex}`}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 0.95,
+              rotate: [-5, 5, -5],
+            }}
+            exit={{ opacity: 0, transition: { duration: 0.3 } }}
+            transition={{
+              opacity: { duration: 0.4 },
+              rotate: { duration: 2.2, repeat: Infinity, ease: "easeInOut" },
+            }}
+            style={{
+              left: SANRIO_POSITIONS[cinnamorollIndex],
+              transformOrigin: "center center",
+            }}
+            className="w-20 h-20 absolute bottom-4 z-0 flex items-end justify-center pointer-events-none"
+          >
+            <img
+              src="/extras/Cinnamoroll.png"
+              alt="Cinnamoroll"
+              className="w-full h-auto object-contain drop-shadow-md"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* 2. POMPOMPURIN - Stationary X position, gentle slow center tilt, zero linear movement */}
+      <AnimatePresence mode="wait">
+        {pomVisible && (
+          <motion.div
+            key={`pom-${pompompurinIndex}`}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 0.95,
+              rotate: [5, -5, 5],
+            }}
+            exit={{ opacity: 0, transition: { duration: 0.3 } }}
+            transition={{
+              opacity: { duration: 0.4 },
+              rotate: { duration: 2.4, repeat: Infinity, ease: "easeInOut" },
+            }}
+            style={{
+              left: SANRIO_POSITIONS[pompompurinIndex],
+              transformOrigin: "center center",
+            }}
+            className="w-20 h-20 absolute bottom-1 z-0 flex items-end justify-center pointer-events-none"
+          >
+            <img
+              src="/extras/Pompompurin.png"
+              alt="Pompompurin"
+              className="w-full h-auto object-contain drop-shadow-md"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
