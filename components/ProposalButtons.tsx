@@ -112,9 +112,9 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
                 <Heart className="w-10 h-10 fill-[#D4AF37]" />
               </motion.div>
 
-              {/* Header Text: "Angeles mi amor..." */}
+              {/* Header Text: "Mi linda Angeles..." */}
               <h1 className={`${fontPlayfair.className} text-3xl sm:text-4xl font-extrabold text-[#5C4538] tracking-wide`}>
-                Angeles mi amor...
+                Mi linda Angeles...
               </h1>
 
               {/* Proposal Question: "¿Quieres ser mi novia?" */}

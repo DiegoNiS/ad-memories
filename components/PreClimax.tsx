@@ -77,28 +77,28 @@ export const PreClimax: React.FC<PreClimaxProps> = ({ onComplete }) => {
 
       {/* Top Accent: The Little Prince Rose SVG Illustration */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="pt-6 z-10 flex flex-col items-center"
+        className="pt-4 z-10 flex flex-col items-center shrink-0"
       >
-        <div className="w-16 h-16 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center shadow-lg relative">
+        <div className="w-14 h-14 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center shadow-lg relative">
           {/* Glass dome over rose */}
           <div className="absolute inset-0 rounded-full border border-white/20 bg-gradient-to-tr from-transparent via-white/10 to-transparent" />
           {/* Glowing Little Prince Rose */}
-          <Heart className="w-8 h-8 text-[#E63946] fill-[#E63946] drop-shadow-[0_0_12px_rgba(230,57,70,0.8)]" />
+          <Heart className="w-7 h-7 text-[#E63946] fill-[#E63946] drop-shadow-[0_0_12px_rgba(230,57,70,0.8)]" />
         </div>
-        <span className="text-[10px] text-[#D4AF37] font-sans uppercase tracking-widest mt-2 opacity-80">
+        <span className="text-[10px] text-[#D4AF37] font-sans uppercase tracking-widest mt-1.5 opacity-80">
           ✦ Fue el tiempo que pasaste con tu rosa ✦
         </span>
       </motion.div>
 
-      {/* Center Typing Text in Romantic Font */}
-      <div className="max-w-md my-auto space-y-4 z-10 px-2">
+      {/* Main Typing Text Container (Fixed min height so layout never jumps) */}
+      <div className="my-auto z-10 px-2 max-w-md w-full flex flex-col items-center justify-center min-h-[140px] sm:min-h-[160px]">
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className={`${fontGreatVibes.className} text-3xl sm:text-4xl text-[#FFF8DC] leading-relaxed tracking-wide font-bold drop-shadow-md`}
+          className={`${fontGreatVibes.className} text-3xl sm:text-4xl text-[#FFF8DC] leading-relaxed tracking-wide font-bold drop-shadow-md text-center`}
         >
           {displayedText}
           {!isTypingComplete && (
@@ -111,45 +111,52 @@ export const PreClimax: React.FC<PreClimaxProps> = ({ onComplete }) => {
         </motion.p>
       </div>
 
-      {/* Bottom Section: Dedicated Subtitles & Little Prince Footer */}
-      <div className="w-full flex flex-col items-center z-10 pb-2 space-y-3">
+      {/* Bottom Section: Little Prince Image (1.5x larger), Quote, Subtitle & Smooth Tap Prompt */}
+      <div className="w-full flex flex-col items-center z-10 pb-4 space-y-2 max-w-sm shrink-0">
+        {/* Little Prince Image (1.5x larger: w-52 h-52 sm:w-60 sm:h-60) inside bottom container */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
+          className="w-52 h-52 sm:w-60 sm:h-60 relative flex items-center justify-center -mb-2"
+        >
+          <img
+            src="/extras/principito_blanco.png"
+            alt="El Principito"
+            className="w-full h-full object-contain drop-shadow-[0_0_18px_rgba(212,175,55,0.45)]"
+          />
+        </motion.div>
+
+        {/* Authentic Little Prince Quote */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.9 }}
+          transition={{ duration: 1 }}
+          className={`${fontGreatVibes.className} text-xl sm:text-2xl text-[#D4AF37] italic text-center leading-snug font-bold drop-shadow-xs`}
+        >
+          &ldquo;Es mi rosa... no hay otra en el mundo como ella.&rdquo;
+        </motion.p>
+
         {/* Permanent Subtitle */}
         <p className="text-xs text-[#D4AF37] font-serif-title italic tracking-wider opacity-80">
           Para la chica más especial del mundo...
         </p>
 
-        {/* Pulsing Tap Prompt (Appears smoothly after typing without replacing the subtitle) */}
-        <AnimatePresence>
-          {isTypingComplete && (
-            <motion.p
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="text-sm text-[#FFF8DC] font-serif-title tracking-wider font-semibold drop-shadow-sm"
-            >
-              Presiona en cualquier lugar para continuar ✦
-            </motion.p>
-          )}
-        </AnimatePresence>
-
-        {/* Little Prince Illustration & Quote Banner at Bottom */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 0.9, y: 0 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="flex items-center space-x-3 pt-2 border-t border-[#D4AF37]/20 max-w-xs"
-        >
-          {/* principito_blanco.png PNG Image */}
-          <img
-            src="/extras/principito_blanco.png"
-            alt="El Principito"
-            className="w-12 h-12 object-contain drop-shadow-md shrink-0"
-          />
-          {/* Authentic Little Prince Quote */}
-          <p className={`${fontGreatVibes.className} text-lg sm:text-xl text-[#D4AF37] italic text-left leading-snug font-bold`}>
-            &ldquo;Es mi rosa... no hay otra en el mundo como ella.&rdquo;
-          </p>
-        </motion.div>
+        {/* Reserved height for Tap Prompt so appearing never pushes text/image */}
+        <div className="h-7 flex items-center justify-center pt-1">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={isTypingComplete ? { opacity: [0.4, 1, 0.4] } : { opacity: 0 }}
+            transition={
+              isTypingComplete
+                ? { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                : { duration: 0.6 }
+            }
+            className="text-sm text-[#FFF8DC] font-serif-title tracking-wider font-semibold drop-shadow-sm"
+          >
+            Presiona en cualquier lugar para continuar ✦
+          </motion.p>
+        </div>
       </div>
     </div>
   );
