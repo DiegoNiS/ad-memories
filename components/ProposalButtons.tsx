@@ -30,14 +30,25 @@ const PERSISTENCE_MESSAGES = [
 
 export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) => {
   const [noCount, setNoCount] = useState(0);
-  const [showQuestionAndButtons, setShowQuestionAndButtons] = useState(false);
+  const [showProposalQuestion, setShowProposalQuestion] = useState(false);
+  const [showButtons, setShowButtons] = useState(false);
 
-  // Timed Sequence: 4 seconds for top crest, then proposal question & buttons slowly fade in
+  // Staggered Timed Sequence: 
+  // - 3.5s: Proposal Question text fades in smoothly
+  // - 4.8s (1.3s later): Interactive ¡SÍ! and No buttons fade in smoothly
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowQuestionAndButtons(true);
-    }, 4000);
-    return () => clearTimeout(timer);
+    const questionTimer = setTimeout(() => {
+      setShowProposalQuestion(true);
+    }, 3500);
+
+    const buttonsTimer = setTimeout(() => {
+      setShowButtons(true);
+    }, 4800);
+
+    return () => {
+      clearTimeout(questionTimer);
+      clearTimeout(buttonsTimer);
+    };
   }, []);
 
   const handleNoClick = () => {
@@ -82,14 +93,14 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
         </p>
       </motion.div>
 
-      {/* 2. PROPOSAL QUESTION SECTION: Positioned above center, fades in after 4 seconds */}
+      {/* 2. PROPOSAL QUESTION SECTION: Positioned above center, fades in after 3.5 seconds */}
       <div className="w-full max-w-sm mx-auto flex flex-col items-center text-center space-y-2 z-10 pt-4 pb-2">
         <AnimatePresence>
-          {showQuestionAndButtons && (
+          {showProposalQuestion && (
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
+              transition={{ duration: 1.1, ease: "easeOut" }}
               className="flex flex-col items-center space-y-2"
             >
               {/* Animated Heart Icon Badge */}
@@ -115,7 +126,7 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
         </AnimatePresence>
       </div>
 
-      {/* 3. PERSISTENCE MESSAGES: Perfectly positioned in the gap between proposal question and bottom buttons */}
+      {/* 3. PERSISTENCE MESSAGES: Positioned in the gap between question and buttons */}
       <div className="w-full max-w-sm mx-auto my-auto flex items-center justify-center px-4 text-center z-10 min-h-[50px]">
         <AnimatePresence mode="wait">
           {currentMessageIndex >= 0 && (
@@ -133,14 +144,14 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
         </AnimatePresence>
       </div>
 
-      {/* 4. BOTTOM BUTTONS: Fades in after 4 seconds */}
+      {/* 4. BOTTOM BUTTONS: Fades in 1.3 seconds after proposal question */}
       <div className="w-full max-w-xs mx-auto z-20 relative flex flex-col items-center min-h-[130px] justify-end">
         <AnimatePresence>
-          {showQuestionAndButtons && (
+          {showButtons && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+              transition={{ duration: 1.1, ease: "easeOut" }}
               className="w-full space-y-3 flex flex-col items-center"
             >
               {/* YES BUTTON - Vibrant Gold Gradient with Heart Icon */}
@@ -200,6 +211,12 @@ const SanrioSmartPopups: React.FC = () => {
   const [cinVisible, setCinVisible] = useState<boolean>(true);
   const [pomVisible, setPomVisible] = useState<boolean>(true);
 
+  // Keep latest positions in refs so intervals can reference them without causing effect dependency resets
+  const cinPosRef = React.useRef(cinPos);
+  const pomPosRef = React.useRef(pomPos);
+  cinPosRef.current = cinPos;
+  pomPosRef.current = pomPos;
+
   // Helper to generate a random X percentage (5% to 75%) ensuring minimum 30% gap from current opposing character
   const generateNonOverlappingPos = (otherPos: number): number => {
     let newPos = Math.floor(Math.random() * 70) + 5;
@@ -212,20 +229,22 @@ const SanrioSmartPopups: React.FC = () => {
   };
 
   useEffect(() => {
-    // Cinnamoroll Teleport Timer: Fades out, recalculates non-overlapping position, fades in
+    // Cinnamoroll Teleport Timer: Every 4.5s, fades out, recalculates non-overlapping position, fades in
     const cinTimer = setInterval(() => {
       setCinVisible(false);
       setTimeout(() => {
-        setCinPos((prevCin) => generateNonOverlappingPos(pomPos));
+        const nextPos = generateNonOverlappingPos(pomPosRef.current);
+        setCinPos(nextPos);
         setCinVisible(true);
       }, 350);
     }, 4500);
 
-    // Pompompurin Teleport Timer
+    // Pompompurin Teleport Timer: Every 5.2s, fades out, recalculates non-overlapping position, fades in
     const pomTimer = setInterval(() => {
       setPomVisible(false);
       setTimeout(() => {
-        setPomPos((prevPom) => generateNonOverlappingPos(cinPos));
+        const nextPos = generateNonOverlappingPos(cinPosRef.current);
+        setPomPos(nextPos);
         setPomVisible(true);
       }, 350);
     }, 5200);
@@ -234,7 +253,7 @@ const SanrioSmartPopups: React.FC = () => {
       clearInterval(cinTimer);
       clearInterval(pomTimer);
     };
-  }, [cinPos, pomPos]);
+  }, []);
 
   return (
     <>
