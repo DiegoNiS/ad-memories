@@ -6,6 +6,7 @@ import ReactConfetti from 'react-confetti';
 import { Heart, Sparkles, Sun } from 'lucide-react';
 import { recordProposalAcceptance } from '@/lib/supabaseClient';
 import { getTimeElapsed, padZero, TimeElapsed } from '@/utils/timeHelpers';
+import { fontGreatVibes, fontPlayfair } from '@/app/fonts';
 
 const SUNFLOWER_COLORS = [
   '#D4AF37',
@@ -97,7 +98,7 @@ export const FinalCelebration: React.FC = () => {
             hidden: { opacity: 0, y: 15 },
             visible: { opacity: 1, y: 0 },
           }}
-          className="font-serif-title text-3xl sm:text-4xl font-extrabold text-[#4A3B32] tracking-wide"
+          className={`${fontPlayfair.className} text-3xl sm:text-4xl font-extrabold text-[#4A3B32] tracking-wide`}
         >
           Sabía que dirías que sí. ❤️
         </motion.h1>
@@ -107,8 +108,7 @@ export const FinalCelebration: React.FC = () => {
             hidden: { opacity: 0, y: 15 },
             visible: { opacity: 1, y: 0 },
           }}
-          style={{ fontFamily: "'Great Vibes', 'Dancing Script', cursive" }}
-          className="font-cursive text-2xl sm:text-3xl text-[#4A3B32] px-3 leading-relaxed font-bold"
+          className={`${fontGreatVibes.className} text-3xl sm:text-4xl text-[#4A3B32] px-3 leading-relaxed font-bold`}
         >
           &ldquo;Eres mi niña hermosa, mi princesita y mi lugar seguro. Te prometo cuidar de ti con toda mi alma siempre.&rdquo;
         </motion.p>
@@ -137,7 +137,7 @@ export const FinalCelebration: React.FC = () => {
         <div className="grid grid-cols-4 gap-2 px-1">
           {/* Days */}
           <div className="ios-glass p-3.5 rounded-xl flex flex-col items-center justify-center border border-[#D4AF37]/35 shadow-md">
-            <span className="font-serif-title text-2xl font-extrabold text-[#4A3B32]">
+            <span className={`${fontPlayfair.className} text-2xl font-extrabold text-[#4A3B32]`}>
               {elapsed.days}
             </span>
             <span className="text-[10px] font-sans-ui font-bold text-[#D4AF37] uppercase tracking-wider mt-0.5">
@@ -147,7 +147,7 @@ export const FinalCelebration: React.FC = () => {
 
           {/* Hours */}
           <div className="ios-glass p-3.5 rounded-xl flex flex-col items-center justify-center border border-[#D4AF37]/35 shadow-md">
-            <span className="font-serif-title text-2xl font-extrabold text-[#4A3B32]">
+            <span className={`${fontPlayfair.className} text-2xl font-extrabold text-[#4A3B32]`}>
               {padZero(elapsed.hours)}
             </span>
             <span className="text-[10px] font-sans-ui font-bold text-[#D4AF37] uppercase tracking-wider mt-0.5">
@@ -157,7 +157,7 @@ export const FinalCelebration: React.FC = () => {
 
           {/* Minutes */}
           <div className="ios-glass p-3.5 rounded-xl flex flex-col items-center justify-center border border-[#D4AF37]/35 shadow-md">
-            <span className="font-serif-title text-2xl font-extrabold text-[#4A3B32]">
+            <span className={`${fontPlayfair.className} text-2xl font-extrabold text-[#4A3B32]`}>
               {padZero(elapsed.minutes)}
             </span>
             <span className="text-[10px] font-sans-ui font-bold text-[#D4AF37] uppercase tracking-wider mt-0.5">
@@ -171,7 +171,7 @@ export const FinalCelebration: React.FC = () => {
               key={elapsed.seconds}
               initial={{ scale: 1.2, opacity: 0.6 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="font-serif-title text-2xl font-extrabold text-[#4A3B32]"
+              className={`${fontPlayfair.className} text-2xl font-extrabold text-[#4A3B32]`}
             >
               {padZero(elapsed.seconds)}
             </motion.span>
@@ -188,8 +188,7 @@ export const FinalCelebration: React.FC = () => {
           hidden: { opacity: 0 },
           visible: { opacity: 1 },
         }}
-        style={{ fontFamily: "'Great Vibes', 'Dancing Script', cursive" }}
-        className="flex items-center justify-center space-x-2 text-2xl text-[#D4AF37] font-cursive font-bold z-10 pb-6"
+        className={`${fontGreatVibes.className} flex items-center justify-center space-x-2 text-3xl text-[#D4AF37] font-bold z-10 pb-6`}
       >
         <Heart className="w-5 h-5 fill-[#D4AF37]" />
         <span>Diego &amp; Angeles • Para Siempre</span>

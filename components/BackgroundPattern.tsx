@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { fontGreatVibes } from '@/app/fonts';
 
 export const BackgroundPattern: React.FC = () => {
   return (
@@ -23,7 +24,7 @@ export const BackgroundPattern: React.FC = () => {
       {/* EASTER EGG 1: Intertwined Names "Diego & Angeles" in Calligraphy */}
       <div className="absolute inset-0 flex items-center justify-center">
         <svg
-          className="w-full max-w-md h-auto opacity-[0.07] transition-opacity duration-1000"
+          className="w-full max-w-md h-auto opacity-[0.08] transition-opacity duration-1000"
           viewBox="0 0 500 200"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -33,8 +34,8 @@ export const BackgroundPattern: React.FC = () => {
             dominantBaseline="middle"
             textAnchor="middle"
             fill="#4A3B32"
-            fontSize="52"
-            fontFamily="var(--font-cursive), Dancing Script, Playfair Display, serif"
+            fontSize="56"
+            className={fontGreatVibes.className}
             fontStyle="italic"
             fontWeight="bold"
             letterSpacing="2"
