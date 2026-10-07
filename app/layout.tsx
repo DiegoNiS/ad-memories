@@ -65,6 +65,15 @@ export default function RootLayout({
       lang="es"
       className={`${playfair.variable} ${inter.variable} ${montserrat.variable} ${dancingScript.variable} ${greatVibes.variable}`}
     >
+      <head>
+        {/* Bulletproof Google Fonts CDN Link for Cursive, Serif, and Montserrat */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="antialiased selection:bg-[#D4AF37]/20 selection:text-[#4A3B32]">
         {children}
       </body>
