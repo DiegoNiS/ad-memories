@@ -52,7 +52,10 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
       <div className="w-full flex items-center justify-between py-2 border-b border-[#D4AF37]/20 pb-2">
         <div className="flex items-center space-x-2">
           <Heart className="w-5 h-5 text-[#D4AF37] fill-[#D4AF37]" />
-          <span className="font-cursive text-[#4A3B32] font-bold text-2xl sm:text-3xl tracking-wide">
+          <span
+            style={{ fontFamily: "'Dancing Script', 'Great Vibes', cursive" }}
+            className="font-cursive text-[#4A3B32] font-bold text-3xl sm:text-4xl tracking-wide"
+          >
             De Diego Para Angeles
           </span>
         </div>
@@ -78,15 +81,16 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
         {/* Scrollable Cursive Letter Content */}
         <div
           ref={letterRef}
-          className="flex-1 p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-[#D4AF37]/30 text-[#4A3B32] font-cursive text-xl sm:text-2xl leading-relaxed tracking-wide space-y-4"
+          style={{ fontFamily: "'Dancing Script', 'Great Vibes', cursive" }}
+          className="flex-1 p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-[#D4AF37]/30 text-[#4A3B32] font-cursive text-2xl sm:text-3xl leading-relaxed tracking-wide space-y-4 font-semibold"
         >
-          <p className="whitespace-pre-line font-medium">
+          <p className="whitespace-pre-line font-semibold">
             {displayedText}
             {!isCompleted && (
               <motion.span
                 animate={{ opacity: [0, 1, 0] }}
                 transition={{ duration: 0.8, repeat: Infinity }}
-                className="inline-block ml-1 w-2 h-5 bg-[#D4AF37] align-middle"
+                className="inline-block ml-1 w-2 h-6 bg-[#D4AF37] align-middle"
               />
             )}
           </p>
@@ -96,7 +100,8 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="pt-4 text-right font-cursive text-2xl text-[#D4AF37] font-bold"
+              style={{ fontFamily: "'Dancing Script', 'Great Vibes', cursive" }}
+              className="pt-4 text-right font-cursive text-3xl text-[#D4AF37] font-bold"
             >
               ~ Con todo mi amor, Diego ❤️
             </motion.div>

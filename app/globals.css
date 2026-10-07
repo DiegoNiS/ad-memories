@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @layer base {
@@ -23,13 +24,22 @@
   }
 }
 
-/* Custom Typography Utilities */
+/* Custom Typography Utilities for Tailwind v4 */
+@utility font-serif-title {
+  font-family: 'Playfair Display', var(--font-playfair), Georgia, serif !important;
+}
+
+@utility font-cursive {
+  font-family: 'Dancing Script', 'Great Vibes', var(--font-cursive), cursive !important;
+}
+
+/* Fallback CSS Classes */
 .font-serif-title {
-  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  font-family: 'Playfair Display', var(--font-playfair), Georgia, serif !important;
 }
 
 .font-cursive {
-  font-family: var(--font-cursive), 'Dancing Script', cursive;
+  font-family: 'Dancing Script', 'Great Vibes', var(--font-cursive), cursive !important;
 }
 
 /* iOS Safe Area Helper Classes */
