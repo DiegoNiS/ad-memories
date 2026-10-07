@@ -36,7 +36,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
         <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/20 to-[#4A3B32]/10 blur-2xl rounded-2xl" />
 
         {/* Envelope Base Container */}
-        <div className="relative w-full h-full bg-[#FAF6F0] rounded-xl border border-[#D4AF37]/40 shadow-2xl overflow-hidden flex flex-col justify-end">
+        <div className="relative w-full h-full bg-[#FAF6F0] rounded-2xl border-2 border-[#D4AF37]/40 shadow-2xl overflow-hidden flex flex-col justify-end">
           
           {/* Card preview sliding up */}
           <motion.div
@@ -48,7 +48,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
               damping: 18,
               delay: 0.3,
             }}
-            className="absolute top-4 left-4 right-4 h-44 bg-white/90 backdrop-blur-md rounded-lg border border-[#D4AF37]/30 shadow-lg p-4 flex flex-col justify-between"
+            className="absolute top-4 left-4 right-4 h-44 bg-white/95 backdrop-blur-md rounded-xl border border-[#D4AF37]/35 shadow-lg p-4 flex flex-col justify-between z-10"
           >
             <div className="flex justify-between items-center border-b border-[#D4AF37]/20 pb-2">
               <span className="font-serif-title text-[#4A3B32] font-semibold text-sm">
@@ -56,7 +56,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
               </span>
               <Heart className="w-4 h-4 text-[#D4AF37] fill-[#D4AF37]" />
             </div>
-            <p className="text-xs text-[#4A3B32]/70 italic line-clamp-3 leading-relaxed font-sans">
+            <p className="text-xs text-[#4A3B32]/80 italic line-clamp-3 leading-relaxed font-sans">
               "Llegaste cuando no buscaba nada, pero me di cuenta de que eras exactamente lo que me faltaba..."
             </p>
             <span className="text-[10px] text-right text-[#D4AF37] font-semibold tracking-wider uppercase">
@@ -64,10 +64,24 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
             </span>
           </motion.div>
 
-          {/* Envelope Pocket Body */}
-          <div className="absolute inset-0 border-t-[70px] border-l-[170px] border-r-[170px] border-b-[120px] border-transparent border-b-[#F3ECE0] border-l-[#EFE6D8]/90 border-r-[#EFE6D8]/90 pointer-events-none z-10" />
+          {/* Envelope Pocket Body (Scalable SVG) */}
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none z-10"
+            viewBox="0 0 340 255"
+            preserveAspectRatio="none"
+          >
+            {/* Left Flap */}
+            <polygon points="0,0 0,255 170,140" fill="#EFE6D8" opacity="0.95" />
+            {/* Right Flap */}
+            <polygon points="340,0 340,255 170,140" fill="#EAE0D0" opacity="0.95" />
+            {/* Bottom Flap */}
+            <polygon points="0,255 340,255 170,125" fill="#F3ECE0" />
+            {/* Subtle Inner Pocket Lines */}
+            <polyline points="0,0 170,140 340,0" fill="none" stroke="#D4AF37" strokeWidth="1" opacity="0.3" />
+            <polyline points="0,255 170,125 340,255" fill="none" stroke="#D4AF37" strokeWidth="1" opacity="0.3" />
+          </svg>
 
-          {/* Envelope Flap (Top triangle) */}
+          {/* Top Flap (Animating SVG triangle) */}
           <motion.div
             initial={{ rotateX: 0 }}
             animate={isOpen ? { rotateX: 180 } : { rotateX: 0 }}
@@ -75,9 +89,18 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
               duration: 0.6,
               ease: [0.4, 0, 0.2, 1],
             }}
-            style={{ transformOrigin: "top" }}
-            className="absolute top-0 left-0 right-0 h-0 border-l-[170px] border-r-[170px] border-t-[120px] border-l-transparent border-r-transparent border-t-[#E6DBCB] z-20 shadow-md"
-          />
+            style={{ transformOrigin: "top", transformStyle: "preserve-3d" }}
+            className="absolute top-0 left-0 right-0 h-[130px] z-20 pointer-events-none"
+          >
+            <svg
+              className="w-full h-full filter drop-shadow-md"
+              viewBox="0 0 340 130"
+              preserveAspectRatio="none"
+            >
+              <polygon points="0,0 340,0 170,130" fill="#E6DBCB" />
+              <polyline points="0,0 170,130 340,0" fill="none" stroke="#D4AF37" strokeWidth="1.5" opacity="0.4" />
+            </svg>
+          </motion.div>
 
           {/* Wax Seal Button */}
           <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-auto">
