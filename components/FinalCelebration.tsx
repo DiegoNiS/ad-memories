@@ -7,6 +7,7 @@ import { Heart, Sparkles } from 'lucide-react';
 import { recordProposalAcceptance } from '@/lib/supabaseClient';
 import { getTimeElapsed, padZero, TimeElapsed } from '@/utils/timeHelpers';
 import { fontGreatVibes, fontPlayfair } from '@/app/fonts';
+import FallingLeaves from '@/components/FallingLeaves';
 
 const SUNFLOWER_COLORS = [
   '#D4AF37',
@@ -68,6 +69,9 @@ export const FinalCelebration: React.FC = () => {
       }}
       className="flex flex-col items-center justify-between w-full max-w-md mx-auto min-h-[90dvh] pt-[env(safe-area-inset-top,20px)] pb-[env(safe-area-inset-bottom,20px)] px-4 select-none relative overflow-hidden text-center"
     >
+      {/* Falling Autumn Leaves Particle Background */}
+      <FallingLeaves />
+
       {/* Sunflower & Gold Confetti */}
       {isConfettiActive && (
         <ReactConfetti
