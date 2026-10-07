@@ -155,20 +155,21 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
           <path d="M 0 40 Q 30 15 60 40 Q 90 20 120 40 Q 150 10 180 40 Q 270 15 300 40 Q 330 20 360 40 Q 380 10 400 40 Z" />
         </svg>
 
-        {/* 1. CINNAMOROLL (Left Side) - PNG Image (Slightly smaller, w-20 h-20), Discrete position popping on X-axis with opacity fade in/out & light tilt */}
+        {/* 1. CINNAMOROLL (Same size w-20 h-20, center-origin tilt, teleporting across full X spectrum) */}
         <motion.div
           animate={{
-            x: [10, 10, 50, 50, -10, -10, 30, 30],
-            opacity: [0, 0.95, 0.95, 0, 0, 0.9, 0.9, 0],
-            rotate: [-5, -5, 6, 6, -3, -3, 4, 4],
+            x: ["5vw", "5vw", "65vw", "65vw", "35vw", "35vw", "75vw", "75vw"],
+            opacity: [0, 0.95, 0.95, 0, 0, 0.95, 0.95, 0],
+            rotate: [-6, -6, 7, 7, -4, -4, 5, 5],
           }}
           transition={{
-            duration: 12,
+            duration: 15,
             repeat: Infinity,
             ease: "easeInOut",
             times: [0, 0.2, 0.4, 0.45, 0.5, 0.7, 0.9, 0.95],
           }}
-          className="w-20 h-20 absolute bottom-1 left-3 z-0 flex items-end justify-center"
+          style={{ transformOrigin: "center center" }}
+          className="w-20 h-20 absolute bottom-1 left-0 z-0 flex items-end justify-center"
         >
           <img
             src="/extras/Cinnamoroll.png"
@@ -177,21 +178,22 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
           />
         </motion.div>
 
-        {/* 2. POMPOMPURIN (Right Side) - PNG Image (Proportionally larger, w-24 h-24), Discrete position popping on X-axis with opacity fade in/out & light tilt */}
+        {/* 2. POMPOMPURIN (Same size w-20 h-20, center-origin tilt, teleporting across full X spectrum) */}
         <motion.div
           animate={{
-            x: [-10, -10, -60, -60, 15, 15, -30, -30],
-            opacity: [0, 0.95, 0.95, 0, 0, 0.9, 0.9, 0],
-            rotate: [5, 5, -6, -6, 3, 3, -4, -4],
+            x: ["75vw", "75vw", "15vw", "15vw", "60vw", "60vw", "25vw", "25vw"],
+            opacity: [0, 0.95, 0.95, 0, 0, 0.95, 0.95, 0],
+            rotate: [6, 6, -7, -7, 5, 5, -4, -4],
           }}
           transition={{
-            duration: 12,
+            duration: 15,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 1.5,
+            delay: 1.8,
             times: [0, 0.2, 0.4, 0.45, 0.5, 0.7, 0.9, 0.95],
           }}
-          className="w-24 h-24 absolute bottom-1 right-3 z-0 flex items-end justify-center"
+          style={{ transformOrigin: "center center" }}
+          className="w-20 h-20 absolute bottom-1 left-0 z-0 flex items-end justify-center"
         >
           <img
             src="/extras/Pompompurin.png"
