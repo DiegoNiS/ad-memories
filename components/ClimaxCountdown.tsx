@@ -7,43 +7,35 @@ interface ClimaxCountdownProps {
   onComplete: () => void;
 }
 
-const ROMAN_NUMERALS = ["V", "IV", "III", "II", "I"];
+const THREE_SEC_ROMAN = ["III", "II", "I"];
 
 export const ClimaxCountdown: React.FC<ClimaxCountdownProps> = ({ onComplete }) => {
   const [index, setIndex] = useState(0);
   const [isFlashed, setIsFlashed] = useState(false);
-  const [showIntro, setShowIntro] = useState(false);
-  const [showQuestion, setShowQuestion] = useState(false);
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
-    // Stage 1: Countdown V..I (1 second each)
-    if (index < ROMAN_NUMERALS.length) {
+    // Stage 1: Fast 3-second Countdown (1s per numeral: III -> II -> I)
+    if (index < THREE_SEC_ROMAN.length) {
       const timer = setTimeout(() => {
         setIndex((prev) => prev + 1);
       }, 1000);
       return () => clearTimeout(timer);
-    } else if (index === ROMAN_NUMERALS.length) {
-      // Immediately after "I", trigger background flash to warm white #FDFFF0
+    } else if (index === THREE_SEC_ROMAN.length) {
+      // Abrupt background flash to warm white #FDFFF0 immediately after "I"
       setIsFlashed(true);
       
-      // Reveal "Hey mi niña preciosa! Estuve esperando mucho para decirte esto y creo que es un buen momento."
-      const introTimer = setTimeout(() => {
-        setShowIntro(true);
-      }, 400);
+      const contentTimer = setTimeout(() => {
+        setShowContent(true);
+      }, 350);
 
-      // Pause 1.8s before showing "¿Quieres ser mi novia?"
-      const questionTimer = setTimeout(() => {
-        setShowQuestion(true);
-      }, 2400);
-
-      // Move to proposal buttons after reading
+      // Move to proposal buttons after user reads message
       const completeTimer = setTimeout(() => {
         onComplete();
-      }, 5000);
+      }, 4200);
 
       return () => {
-        clearTimeout(introTimer);
-        clearTimeout(questionTimer);
+        clearTimeout(contentTimer);
         clearTimeout(completeTimer);
       };
     }
@@ -57,44 +49,39 @@ export const ClimaxCountdown: React.FC<ClimaxCountdownProps> = ({ onComplete }) 
     >
       <AnimatePresence mode="wait">
         {!isFlashed ? (
-          /* Countdown Roman Numerals */
+          /* Fast 3-second Roman Numerals Countdown (III, II, I) */
           <motion.div
-            key={ROMAN_NUMERALS[index]}
+            key={THREE_SEC_ROMAN[index]}
             initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1.2, opacity: 1 }}
+            animate={{ scale: 1.3, opacity: 1 }}
             exit={{ scale: 2, opacity: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="font-serif-title font-extrabold text-6xl sm:text-7xl text-[#D4AF37] tracking-widest drop-shadow-2xl"
+            transition={{ duration: 0.65, ease: "easeOut" }}
+            className="font-serif-title font-extrabold text-7xl sm:text-8xl text-[#D4AF37] tracking-widest drop-shadow-2xl"
           >
-            {ROMAN_NUMERALS[index]}
+            {THREE_SEC_ROMAN[index]}
           </motion.div>
         ) : (
           /* Warm White Light Flash Screen Content */
-          <div className="flex flex-col items-center justify-center space-y-6 max-w-sm">
-            {showIntro && (
-              <motion.h1
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="font-serif-title text-xl sm:text-2xl font-semibold text-[#4A3B32] leading-relaxed"
-              >
-                Hey mi niña preciosa! Estuve esperando mucho para decirte esto y creo que es un buen momento.
-              </motion.h1>
-            )}
-
-            {showQuestion && (
-              <motion.p
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          <div className="flex flex-col items-center justify-center space-y-6 max-w-md">
+            {showContent && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 15 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{
                   type: "spring",
-                  stiffness: 200,
-                  damping: 15,
+                  stiffness: 180,
+                  damping: 16,
                 }}
-                className="font-serif-title text-3xl sm:text-4xl font-extrabold text-[#D4AF37] tracking-wider drop-shadow-sm pt-2"
+                className="space-y-5"
               >
-                ¿Quieres ser mi novia?
-              </motion.p>
+                <h1 className="font-serif-title text-xl sm:text-2xl font-bold text-[#4A3B32] leading-relaxed">
+                  Hey mi niña preciosa! Estuve esperando mucho para decirte esto y creo que es un buen momento.
+                </h1>
+
+                <p className="font-serif-title text-3xl sm:text-4xl font-extrabold text-[#D4AF37] tracking-wider drop-shadow-sm pt-2">
+                  ¿Quieres ser mi novia?
+                </p>
+              </motion.div>
             )}
           </div>
         )}
