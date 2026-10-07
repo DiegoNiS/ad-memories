@@ -65,7 +65,7 @@ export const FinalCelebration: React.FC = () => {
           },
         },
       }}
-      className="flex flex-col items-center justify-between w-full max-w-md mx-auto min-h-[90dvh] pt-[env(safe-area-inset-top,20px)] pb-[env(safe-area-inset-bottom,20px)] px-4 select-none relative overflow-hidden"
+      className="flex flex-col items-center justify-between w-full max-w-md mx-auto min-h-[90dvh] pt-[env(safe-area-inset-top,20px)] pb-[env(safe-area-inset-bottom,20px)] px-4 select-none relative overflow-hidden text-center"
     >
       {/* Sunflower & Gold Confetti */}
       {isConfettiActive && (
@@ -107,7 +107,8 @@ export const FinalCelebration: React.FC = () => {
             hidden: { opacity: 0, y: 15 },
             visible: { opacity: 1, y: 0 },
           }}
-          className="text-base font-cursive italic text-[#4A3B32]/90 px-4 leading-relaxed font-semibold"
+          style={{ fontFamily: "'Great Vibes', 'Dancing Script', cursive" }}
+          className="font-cursive text-2xl sm:text-3xl text-[#4A3B32] px-3 leading-relaxed font-bold"
         >
           &ldquo;Eres mi niña hermosa, mi princesita y mi lugar seguro. Te prometo cuidar de ti con toda mi alma siempre.&rdquo;
         </motion.p>
@@ -127,7 +128,7 @@ export const FinalCelebration: React.FC = () => {
             <span>NUESTRA HISTORIA OFICIAL</span>
             <Sparkles className="w-4 h-4" />
           </div>
-          <p className="text-xs text-[#4A3B32]/75 font-sans font-medium">
+          <p className="text-sm font-sans-ui font-semibold text-[#4A3B32]">
             Tiempo siendo enamorados oficiales:
           </p>
         </div>
@@ -135,46 +136,46 @@ export const FinalCelebration: React.FC = () => {
         {/* Live Timer Grid */}
         <div className="grid grid-cols-4 gap-2 px-1">
           {/* Days */}
-          <div className="ios-glass p-3 rounded-xl flex flex-col items-center justify-center border border-[#D4AF37]/35 shadow-md">
-            <span className="font-serif-title text-xl font-bold text-[#4A3B32]">
+          <div className="ios-glass p-3.5 rounded-xl flex flex-col items-center justify-center border border-[#D4AF37]/35 shadow-md">
+            <span className="font-serif-title text-2xl font-extrabold text-[#4A3B32]">
               {elapsed.days}
             </span>
-            <span className="text-[9px] font-sans font-bold text-[#D4AF37] uppercase tracking-wider mt-0.5">
+            <span className="text-[10px] font-sans-ui font-bold text-[#D4AF37] uppercase tracking-wider mt-0.5">
               Días
             </span>
           </div>
 
           {/* Hours */}
-          <div className="ios-glass p-3 rounded-xl flex flex-col items-center justify-center border border-[#D4AF37]/35 shadow-md">
-            <span className="font-serif-title text-xl font-bold text-[#4A3B32]">
+          <div className="ios-glass p-3.5 rounded-xl flex flex-col items-center justify-center border border-[#D4AF37]/35 shadow-md">
+            <span className="font-serif-title text-2xl font-extrabold text-[#4A3B32]">
               {padZero(elapsed.hours)}
             </span>
-            <span className="text-[9px] font-sans font-bold text-[#D4AF37] uppercase tracking-wider mt-0.5">
+            <span className="text-[10px] font-sans-ui font-bold text-[#D4AF37] uppercase tracking-wider mt-0.5">
               Horas
             </span>
           </div>
 
           {/* Minutes */}
-          <div className="ios-glass p-3 rounded-xl flex flex-col items-center justify-center border border-[#D4AF37]/35 shadow-md">
-            <span className="font-serif-title text-xl font-bold text-[#4A3B32]">
+          <div className="ios-glass p-3.5 rounded-xl flex flex-col items-center justify-center border border-[#D4AF37]/35 shadow-md">
+            <span className="font-serif-title text-2xl font-extrabold text-[#4A3B32]">
               {padZero(elapsed.minutes)}
             </span>
-            <span className="text-[9px] font-sans font-bold text-[#D4AF37] uppercase tracking-wider mt-0.5">
+            <span className="text-[10px] font-sans-ui font-bold text-[#D4AF37] uppercase tracking-wider mt-0.5">
               Min
             </span>
           </div>
 
           {/* Seconds */}
-          <div className="ios-glass p-3 rounded-xl flex flex-col items-center justify-center border border-[#D4AF37]/35 shadow-md">
+          <div className="ios-glass p-3.5 rounded-xl flex flex-col items-center justify-center border border-[#D4AF37]/35 shadow-md">
             <motion.span
               key={elapsed.seconds}
               initial={{ scale: 1.2, opacity: 0.6 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="font-serif-title text-xl font-bold text-[#4A3B32]"
+              className="font-serif-title text-2xl font-extrabold text-[#4A3B32]"
             >
               {padZero(elapsed.seconds)}
             </motion.span>
-            <span className="text-[9px] font-sans font-bold text-[#D4AF37] uppercase tracking-wider mt-0.5">
+            <span className="text-[10px] font-sans-ui font-bold text-[#D4AF37] uppercase tracking-wider mt-0.5">
               Seg
             </span>
           </div>
@@ -187,10 +188,11 @@ export const FinalCelebration: React.FC = () => {
           hidden: { opacity: 0 },
           visible: { opacity: 1 },
         }}
-        className="flex items-center justify-center space-x-1.5 text-sm text-[#D4AF37] font-cursive font-bold z-10 pb-4"
+        style={{ fontFamily: "'Great Vibes', 'Dancing Script', cursive" }}
+        className="flex items-center justify-center space-x-2 text-2xl text-[#D4AF37] font-cursive font-bold z-10 pb-6"
       >
-        <Heart className="w-4 h-4 fill-[#D4AF37]" />
-        <span className="text-base">Diego &amp; Angeles • Para Siempre</span>
+        <Heart className="w-5 h-5 fill-[#D4AF37]" />
+        <span>Diego &amp; Angeles • Para Siempre</span>
         <Heart className="w-4 h-4 fill-[#D4AF37]" />
       </motion.div>
     </motion.div>
