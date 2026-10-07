@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Playfair_Display, Inter, Dancing_Script } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -14,13 +14,19 @@ const inter = Inter({
   display: "swap",
 });
 
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  variable: "--font-cursive",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Angeles ❤️",
-  description: "Una pregunta muy especial para la persona más increíble.",
+  title: "Diego & Angeles ❤️",
+  description: "Una declaración muy especial para la persona más increíble.",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Angeles",
+    title: "Diego & Angeles",
   },
   formatDetection: {
     telephone: false,
@@ -42,7 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${playfair.variable} ${inter.variable}`}>
+    <html lang="es" className={`${playfair.variable} ${inter.variable} ${dancingScript.variable}`}>
       <body className="antialiased selection:bg-[#D4AF37]/20 selection:text-[#4A3B32]">
         {children}
       </body>

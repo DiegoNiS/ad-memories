@@ -23,9 +23,13 @@
   }
 }
 
-/* Custom Serif Heading Utility */
+/* Custom Typography Utilities */
 .font-serif-title {
-  font-family: 'Playfair Display', 'Cinzel', Georgia, serif;
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
+
+.font-cursive {
+  font-family: var(--font-cursive), 'Dancing Script', cursive;
 }
 
 /* iOS Safe Area Helper Classes */
