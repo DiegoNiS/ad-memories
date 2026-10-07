@@ -35,20 +35,20 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
         {/* Shadow glow around envelope */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/20 to-[#4A3B32]/10 blur-2xl rounded-2xl" />
 
-        {/* Envelope Base Container */}
-        <div className="relative w-full h-full bg-[#FAF6F0] rounded-2xl border-2 border-[#D4AF37]/40 shadow-2xl overflow-hidden flex flex-col justify-end">
+        {/* Envelope Base Container - overflow-visible allows card to pop up smoothly out of envelope */}
+        <div className="relative w-full h-full bg-[#FAF6F0] rounded-2xl border-2 border-[#D4AF37]/40 shadow-2xl overflow-visible flex flex-col justify-end">
           
-          {/* Card preview sliding up */}
+          {/* Card preview sliding up out of envelope pocket */}
           <motion.div
-            initial={{ y: 60, opacity: 0 }}
-            animate={isOpen ? { y: -70, opacity: 1 } : { y: 60, opacity: 0 }}
+            initial={{ y: 50, opacity: 0 }}
+            animate={isOpen ? { y: -90, opacity: 1, scale: 1.02 } : { y: 50, opacity: 0 }}
             transition={{
               type: "spring",
-              stiffness: 140,
-              damping: 18,
-              delay: 0.3,
+              stiffness: 120,
+              damping: 16,
+              delay: 0.2,
             }}
-            className="absolute top-4 left-4 right-4 h-44 bg-white/95 backdrop-blur-md rounded-xl border border-[#D4AF37]/35 shadow-lg p-4 flex flex-col justify-between z-10"
+            className="absolute top-4 left-4 right-4 h-44 bg-white/95 backdrop-blur-md rounded-xl border border-[#D4AF37]/35 shadow-2xl p-4 flex flex-col justify-between z-25"
           >
             <div className="flex justify-between items-center border-b border-[#D4AF37]/20 pb-2">
               <span className="font-serif-title text-[#4A3B32] font-semibold text-sm">
@@ -60,13 +60,13 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
               "Llegaste cuando no buscaba nada, pero me di cuenta de que eras exactamente lo que me faltaba..."
             </p>
             <span className="text-[10px] text-right text-[#D4AF37] font-semibold tracking-wider uppercase">
-              Toca para leer →
+              Abriendo carta... ❤️
             </span>
           </motion.div>
 
           {/* Envelope Pocket Body (Scalable SVG) */}
           <svg
-            className="absolute inset-0 w-full h-full pointer-events-none z-10"
+            className="absolute inset-0 w-full h-full pointer-events-none z-20 rounded-2xl"
             viewBox="0 0 340 255"
             preserveAspectRatio="none"
           >
@@ -86,14 +86,14 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
             initial={{ rotateX: 0 }}
             animate={isOpen ? { rotateX: 180 } : { rotateX: 0 }}
             transition={{
-              duration: 0.6,
+              duration: 0.5,
               ease: [0.4, 0, 0.2, 1],
             }}
             style={{ transformOrigin: "top", transformStyle: "preserve-3d" }}
-            className="absolute top-0 left-0 right-0 h-[130px] z-20 pointer-events-none"
+            className="absolute top-0 left-0 right-0 h-[130px] z-10 pointer-events-none"
           >
             <svg
-              className="w-full h-full filter drop-shadow-md"
+              className="w-full h-full filter drop-shadow-md rounded-t-2xl"
               viewBox="0 0 340 130"
               preserveAspectRatio="none"
             >
