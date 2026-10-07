@@ -78,7 +78,7 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
       </motion.div>
 
       {/* Middle Section: Floating Persistence Messages */}
-      <div className="w-full my-auto flex items-center justify-center px-4 text-center z-10 min-h-[80px]">
+      <div className="w-full my-2 flex items-center justify-center px-4 text-center z-10 min-h-[40px]">
         <AnimatePresence mode="wait">
           {currentMessageIndex >= 0 && (
             <motion.p
@@ -155,21 +155,21 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
           <path d="M 0 40 Q 30 15 60 40 Q 90 20 120 40 Q 150 10 180 40 Q 270 15 300 40 Q 330 20 360 40 Q 380 10 400 40 Z" />
         </svg>
 
-        {/* 1. CINNAMOROLL (Same size w-20 h-20, center-origin tilt, teleporting across full X spectrum) */}
+        {/* 1. CINNAMOROLL (Same size w-20 h-20, raised by 12px (bottom-4) for grass clearance, fast teleport + center tilt wiggle) */}
         <motion.div
           animate={{
-            x: ["5vw", "5vw", "65vw", "65vw", "35vw", "35vw", "75vw", "75vw"],
-            opacity: [0, 0.95, 0.95, 0, 0, 0.95, 0.95, 0],
-            rotate: [-6, -6, 7, 7, -4, -4, 5, 5],
+            x: ["8vw", "8vw", "68vw", "68vw", "38vw", "38vw", "78vw", "78vw", "15vw", "15vw"],
+            opacity: [0, 0.95, 0, 0.95, 0, 0.95, 0, 0.95, 0, 0.95],
+            rotate: [-6, 6, -5, 5, -7, 7, -4, 4, -6, 6],
           }}
           transition={{
-            duration: 15,
+            duration: 10,
             repeat: Infinity,
-            ease: "easeInOut",
-            times: [0, 0.2, 0.4, 0.45, 0.5, 0.7, 0.9, 0.95],
+            rotate: { duration: 1.2, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" },
+            opacity: { duration: 10, repeat: Infinity, times: [0, 0.05, 0.22, 0.25, 0.47, 0.5, 0.72, 0.75, 0.97, 1] },
           }}
           style={{ transformOrigin: "center center" }}
-          className="w-20 h-20 absolute bottom-1 left-0 z-0 flex items-end justify-center"
+          className="w-20 h-20 absolute bottom-4 left-0 z-0 flex items-end justify-center"
         >
           <img
             src="/extras/Cinnamoroll.png"
@@ -178,19 +178,19 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
           />
         </motion.div>
 
-        {/* 2. POMPOMPURIN (Same size w-20 h-20, center-origin tilt, teleporting across full X spectrum) */}
+        {/* 2. POMPOMPURIN (Same size w-20 h-20, fast teleport + center tilt wiggle) */}
         <motion.div
           animate={{
-            x: ["75vw", "75vw", "15vw", "15vw", "60vw", "60vw", "25vw", "25vw"],
-            opacity: [0, 0.95, 0.95, 0, 0, 0.95, 0.95, 0],
-            rotate: [6, 6, -7, -7, 5, 5, -4, -4],
+            x: ["72vw", "72vw", "18vw", "18vw", "58vw", "58vw", "22vw", "22vw", "62vw", "62vw"],
+            opacity: [0, 0.95, 0, 0.95, 0, 0.95, 0, 0.95, 0, 0.95],
+            rotate: [6, -6, 5, -5, 7, -7, 4, -4, 6, -6],
           }}
           transition={{
-            duration: 15,
+            duration: 10,
             repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.8,
-            times: [0, 0.2, 0.4, 0.45, 0.5, 0.7, 0.9, 0.95],
+            delay: 1.1,
+            rotate: { duration: 1.2, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" },
+            opacity: { duration: 10, repeat: Infinity, times: [0, 0.05, 0.22, 0.25, 0.47, 0.5, 0.72, 0.75, 0.97, 1] },
           }}
           style={{ transformOrigin: "center center" }}
           className="w-20 h-20 absolute bottom-1 left-0 z-0 flex items-end justify-center"
