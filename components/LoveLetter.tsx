@@ -38,7 +38,7 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
   useEffect(() => {
     if (showFull) return;
 
-    // Line by line sequential timing: advance line index every 1000ms
+    // Line by line sequential timing: advance line index every 1050ms
     const timer = setInterval(() => {
       setActiveLineIndex((prev) => {
         if (prev < LETTER_LINES.length - 1) {
@@ -93,7 +93,7 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
         <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#D4AF37]/60 rounded-bl z-10" />
         <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#D4AF37]/60 rounded-br z-10" />
 
-        {/* Sequential Line-by-Line Handwriting Reveal (Top to Bottom, ONE line at a time) */}
+        {/* Sequential Line-by-Line Handwriting Reveal without hand emoji */}
         <div className="flex-1 p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-[#D4AF37]/30 text-[#4A3B32]">
           <div className="space-y-2">
             {LETTER_LINES.map((line, idx) => {
@@ -126,15 +126,6 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
                   className={`${fontGreatVibes.className} text-2xl sm:text-3xl leading-relaxed tracking-wide font-medium text-[#4A3B32] block`}
                 >
                   {line}
-                  {isCurrentlyWriting && (
-                    <motion.span
-                      animate={{ opacity: [1, 0] }}
-                      transition={{ duration: 0.5, repeat: Infinity }}
-                      className="inline-block ml-1 text-[#D4AF37] font-sans font-light"
-                    >
-                      ✍️
-                    </motion.span>
-                  )}
                 </motion.p>
               );
             })}

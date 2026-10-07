@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Sparkles } from 'lucide-react';
+import { fontPlayfair } from '@/app/fonts';
 
 interface ProposalButtonsProps {
   onAccept: () => void;
@@ -39,30 +40,32 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
 
   return (
     <div className="fixed inset-0 z-50 bg-[#FDFFF0] flex flex-col items-center justify-between min-h-[100dvh] pt-[env(safe-area-inset-top,20px)] pb-[env(safe-area-inset-bottom,20px)] px-4 select-none">
-      {/* Title & Proposal Question Header */}
+      {/* Title & Styled Proposal Question Header */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 15 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full text-center space-y-3 pt-6"
+        className="w-full text-center space-y-4 pt-6"
       >
         <motion.div
-          animate={{ scale: [1, 1.15, 1] }}
+          animate={{ scale: [1, 1.12, 1] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#F3E5AB] shadow-xl border-2 border-white mb-1"
+          className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-tr from-[#D4AF37] via-[#E5C158] to-[#F3E5AB] shadow-xl border-2 border-white mb-1"
         >
           <Heart className="w-8 h-8 text-[#4A3B32] fill-[#4A3B32]" />
         </motion.div>
 
-        {/* Large Name Display */}
-        <h1 className="font-serif-title text-4xl sm:text-5xl font-extrabold text-[#4A3B32] tracking-wide">
+        {/* Name Display */}
+        <h1 className={`${fontPlayfair.className} text-4xl sm:text-5xl font-extrabold text-[#4A3B32] tracking-wide`}>
           Angeles...
         </h1>
 
-        {/* Proposal Question */}
-        <p className="font-serif-title text-2xl sm:text-3xl font-extrabold text-[#D4AF37] tracking-wider px-2 pt-1 drop-shadow-xs">
-          ¿Quieres ser mi novia?
-        </p>
+        {/* Highly Stylized Proposal Question */}
+        <div className="inline-block px-5 py-2.5 rounded-2xl bg-white/80 backdrop-blur-md border border-[#D4AF37]/40 shadow-lg">
+          <p className={`${fontPlayfair.className} text-2xl sm:text-3xl font-extrabold text-[#D4AF37] tracking-wider drop-shadow-xs`}>
+            ¿Quieres ser mi novia?
+          </p>
+        </div>
       </motion.div>
 
       {/* EXTERNAL PERSISTENCE MESSAGE (Appears OUTSIDE the buttons) */}
@@ -77,7 +80,7 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
               transition={{ duration: 0.45, ease: "easeOut" }}
               className="px-4 py-2.5 rounded-xl bg-white/90 backdrop-blur-md border border-[#D4AF37]/40 shadow-sm"
             >
-              <p className="font-serif-title text-base sm:text-lg font-semibold text-[#4A3B32] italic">
+              <p className={`${fontPlayfair.className} text-base sm:text-lg font-semibold text-[#4A3B32] italic`}>
                 &ldquo;{PERSISTENCE_MESSAGES[currentMessageIndex]}&rdquo;
               </p>
             </motion.div>
@@ -87,7 +90,7 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
 
       {/* BUTTONS CONTAINER */}
       <div className="w-full max-w-xs space-y-5 my-auto py-4 flex flex-col items-center justify-center relative">
-        {/* YES BUTTON - Grows up to 1.5 max & Throbs/Vibrates when NO is pressed */}
+        {/* YES BUTTON - Uses clean SVG Heart instead of raw emoji */}
         <motion.button
           whileHover={{ scale: yesScale * 1.04 }}
           whileTap={{ scale: yesScale * 0.95 }}
@@ -116,10 +119,11 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
             boxShadow: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
           }}
           onClick={onAccept}
-          className="w-full py-4 px-8 rounded-2xl bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#D4AF37] text-[#4A3B32] font-serif-title font-extrabold text-xl sm:text-2xl shadow-2xl flex items-center justify-center space-x-2 border-2 border-white/80 cursor-pointer active:scale-95 transition-all z-20"
+          className={`${fontPlayfair.className} w-full py-4 px-8 rounded-2xl bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#D4AF37] text-[#4A3B32] font-extrabold text-xl sm:text-2xl shadow-2xl flex items-center justify-center space-x-2 border-2 border-white/80 cursor-pointer active:scale-95 transition-all z-20`}
         >
-          <Sparkles className="w-6 h-6 text-[#4A3B32]" />
-          <span>¡SÍ! ❤️</span>
+          <Sparkles className="w-5 h-5 text-[#4A3B32]" />
+          <span>¡SÍ!</span>
+          <Heart className="w-5 h-5 text-[#4A3B32] fill-[#4A3B32]" />
         </motion.button>
 
         {/* NO BUTTON - Text NEVER changes ("No") and stays STATIC in position */}
