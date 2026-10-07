@@ -148,80 +148,56 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
         </motion.p>
       </div>
 
-      {/* Yellow Grass Pasture & Cute Sanrio Characters (Cinnamoroll & Pompompurin) */}
+      {/* Yellow Grass Pasture & Cute Sanrio PNG Characters (Cinnamoroll & Pompompurin) */}
       <div className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none z-10 overflow-hidden">
         {/* Soft Yellow Grassland Silhouette SVG */}
         <svg className="absolute bottom-0 inset-x-0 w-full h-14 fill-[#E8D48A]/50 z-10" viewBox="0 0 400 40" preserveAspectRatio="none">
-          <path d="M 0 40 Q 30 15 60 40 Q 90 20 120 40 Q 150 10 180 40 Q 210 25 240 40 Q 270 15 300 40 Q 330 20 360 40 Q 380 10 400 40 Z" />
+          <path d="M 0 40 Q 30 15 60 40 Q 90 20 120 40 Q 150 10 180 40 Q 270 15 300 40 Q 330 20 360 40 Q 380 10 400 40 Z" />
         </svg>
 
-        {/* 1. CINNAMOROLL (Left Side) - 1.5x Size (w-24 h-24), Smooth X-axis Slide & Soft Fade In/Out */}
+        {/* 1. CINNAMOROLL (Left Side) - PNG Image (Slightly smaller, w-20 h-20), Discrete position popping on X-axis with opacity fade in/out & light tilt */}
         <motion.div
           animate={{
-            x: [-15, 25, -15],
-            opacity: [0.15, 0.95, 0.15],
+            x: [10, 10, 50, 50, -10, -10, 30, 30],
+            opacity: [0, 0.95, 0.95, 0, 0, 0.9, 0.9, 0],
+            rotate: [-5, -5, 6, 6, -3, -3, 4, 4],
           }}
           transition={{
-            duration: 7,
+            duration: 12,
             repeat: Infinity,
             ease: "easeInOut",
+            times: [0, 0.2, 0.4, 0.45, 0.5, 0.7, 0.9, 0.95],
           }}
-          className="w-24 h-24 absolute bottom-0 left-2 z-0"
+          className="w-20 h-20 absolute bottom-1 left-3 z-0 flex items-end justify-center"
         >
-          <svg viewBox="0 0 120 100" className="w-full h-full drop-shadow-sm">
-            {/* Cinnamoroll White Body */}
-            <ellipse cx="60" cy="75" rx="32" ry="22" fill="#FFFFFF" stroke="#6B7C96" strokeWidth="2" />
-            {/* Left Big Floppy Ear */}
-            <path d="M 35 68 C 15 60 2 75 10 88 C 20 95 38 82 40 76 Z" fill="#FFFFFF" stroke="#6B7C96" strokeWidth="2" />
-            {/* Right Big Floppy Ear */}
-            <path d="M 85 68 C 105 60 118 75 110 88 C 100 95 82 82 80 76 Z" fill="#FFFFFF" stroke="#6B7C96" strokeWidth="2" />
-            {/* Blue Eyes */}
-            <ellipse cx="48" cy="70" rx="3" ry="4" fill="#3B82F6" />
-            <ellipse cx="72" cy="70" rx="3" ry="4" fill="#3B82F6" />
-            {/* Pink Rosy Cheeks */}
-            <ellipse cx="38" cy="76" rx="5" ry="3" fill="#FFB7C5" opacity="0.85" />
-            <ellipse cx="82" cy="76" rx="5" ry="3" fill="#FFB7C5" opacity="0.85" />
-            {/* Cute Mouth */}
-            <path d="M 56 75 Q 60 78 64 75" fill="none" stroke="#6B7C96" strokeWidth="1.8" strokeLinecap="round" />
-            {/* Cute Blue Bow Accent */}
-            <path d="M 57 84 L 52 88 L 60 86 L 68 88 L 63 84 Z" fill="#60A5FA" />
-          </svg>
+          <img
+            src="/extras/Cinnamoroll.png"
+            alt="Cinnamoroll"
+            className="w-full h-auto object-contain drop-shadow-md"
+          />
         </motion.div>
 
-        {/* 2. POMPOMPURIN (Right Side) - 1.5x Size (w-24 h-24), Smooth X-axis Slide & Soft Fade In/Out */}
+        {/* 2. POMPOMPURIN (Right Side) - PNG Image (Proportionally larger, w-24 h-24), Discrete position popping on X-axis with opacity fade in/out & light tilt */}
         <motion.div
           animate={{
-            x: [15, -25, 15],
-            opacity: [0.15, 0.95, 0.15],
+            x: [-10, -10, -60, -60, 15, 15, -30, -30],
+            opacity: [0, 0.95, 0.95, 0, 0, 0.9, 0.9, 0],
+            rotate: [5, 5, -6, -6, 3, 3, -4, -4],
           }}
           transition={{
-            duration: 7,
+            duration: 12,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 1,
+            delay: 1.5,
+            times: [0, 0.2, 0.4, 0.45, 0.5, 0.7, 0.9, 0.95],
           }}
-          className="w-24 h-24 absolute bottom-0 right-2 z-0"
+          className="w-24 h-24 absolute bottom-1 right-3 z-0 flex items-end justify-center"
         >
-          <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-sm">
-            {/* Pompompurin Yellow Body */}
-            <path d="M 18 100 C 18 45 82 45 82 100 Z" fill="#FFE066" stroke="#4A3B32" strokeWidth="2.5" />
-            {/* Floppy Left Ear */}
-            <ellipse cx="20" cy="62" rx="9" ry="18" fill="#FFE066" stroke="#4A3B32" strokeWidth="2" transform="rotate(-25 20 62)" />
-            {/* Floppy Right Ear */}
-            <ellipse cx="80" cy="62" rx="9" ry="18" fill="#FFE066" stroke="#4A3B32" strokeWidth="2" transform="rotate(25 80 62)" />
-            {/* Brown Beret Cap */}
-            <ellipse cx="50" cy="48" rx="18" ry="8" fill="#6B4226" stroke="#4A3B32" strokeWidth="2" />
-            <rect x="48" y="38" width="4" height="5" fill="#6B4226" rx="1" />
-            {/* Dark Eyes */}
-            <circle cx="39" cy="66" r="3" fill="#4A3B32" />
-            <circle cx="61" cy="66" r="3" fill="#4A3B32" />
-            {/* Nose & Mouth */}
-            <ellipse cx="50" cy="71" rx="2.5" ry="1.8" fill="#4A3B32" />
-            <path d="M 46 74 Q 50 78 54 74" fill="none" stroke="#4A3B32" strokeWidth="1.8" strokeLinecap="round" />
-            {/* Soft Rosy Cheeks */}
-            <circle cx="30" cy="71" r="4" fill="#FFB7B2" opacity="0.8" />
-            <circle cx="70" cy="71" r="4" fill="#FFB7B2" opacity="0.8" />
-          </svg>
+          <img
+            src="/extras/Pompompurin.png"
+            alt="Pompompurin"
+            className="w-full h-auto object-contain drop-shadow-md"
+          />
         </motion.div>
       </div>
     </motion.div>
