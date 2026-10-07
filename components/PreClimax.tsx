@@ -13,34 +13,40 @@ const PRE_CLIMAX_TEXT = "Hey mi niña preciosa! Estuve esperando mucho para deci
 
 export const PreClimax: React.FC<PreClimaxProps> = ({ onComplete }) => {
   const [displayedText, setDisplayedText] = useState("");
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
 
   useEffect(() => {
     let index = 0;
-    // Calculate typing pace so full sentence typing completes in ~8 seconds + 4 seconds hold = EXACTLY 12 SECONDS
-    const charDelay = Math.floor(8000 / PRE_CLIMAX_TEXT.length);
+    const charDelay = Math.floor(7000 / PRE_CLIMAX_TEXT.length);
 
     const timer = setInterval(() => {
       if (index < PRE_CLIMAX_TEXT.length) {
         setDisplayedText(PRE_CLIMAX_TEXT.substring(0, index + 1));
         index++;
       } else {
+        setIsTypingComplete(true);
         clearInterval(timer);
       }
     }, charDelay);
 
-    // EXACT 12 SECONDS TIMER (12000ms) before auto-transitioning to Step 6
-    const completeTimer = setTimeout(() => {
-      onComplete();
-    }, 12000);
-
     return () => {
       clearInterval(timer);
-      clearTimeout(completeTimer);
     };
-  }, [onComplete]);
+  }, []);
+
+  const handleScreenClick = () => {
+    if (isTypingComplete) {
+      onComplete();
+    }
+  };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#12111A] flex flex-col items-center justify-between select-none px-6 py-12 text-center overflow-hidden">
+    <div
+      onClick={handleScreenClick}
+      className={`fixed inset-0 z-50 bg-[#12111A] flex flex-col items-center justify-between select-none px-6 py-12 text-center overflow-hidden transition-cursor ${
+        isTypingComplete ? 'cursor-pointer' : 'cursor-default'
+      }`}
+    >
       {/* Starry Night Atmosphere & Little Prince Moon Glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(212,175,55,0.15),transparent_70%)] pointer-events-none" />
 
@@ -95,23 +101,37 @@ export const PreClimax: React.FC<PreClimaxProps> = ({ onComplete }) => {
           className={`${fontGreatVibes.className} text-3xl sm:text-4xl text-[#FFF8DC] leading-relaxed tracking-wide font-bold drop-shadow-md`}
         >
           {displayedText}
-          <motion.span
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{ duration: 0.8, repeat: Infinity }}
-            className="inline-block ml-1.5 w-1.5 h-8 bg-[#D4AF37] align-middle rounded-full"
-          />
+          {!isTypingComplete && (
+            <motion.span
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 0.8, repeat: Infinity }}
+              className="inline-block ml-1.5 w-1.5 h-8 bg-[#D4AF37] align-middle rounded-full"
+            />
+          )}
         </motion.p>
       </div>
 
-      {/* Bottom Subtitle */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.7 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="text-xs text-[#D4AF37] font-serif-title italic tracking-wider pb-4 z-10"
-      >
-        Para la chica más especial del mundo...
-      </motion.p>
+      {/* Bottom Subtitle / Pulsing Tap Prompt */}
+      <div className="pb-4 z-10 min-h-[40px] flex items-center justify-center">
+        {isTypingComplete ? (
+          <motion.p
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: [0.4, 1, 0.4] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="text-sm text-[#D4AF37] font-serif-title tracking-wider font-semibold"
+          >
+            Presiona en cualquier lugar para continuar ✦
+          </motion.p>
+        ) : (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.7 }}
+            className="text-xs text-[#D4AF37] font-serif-title italic tracking-wider"
+          >
+            Para la chica más especial del mundo...
+          </motion.p>
+        )}
+      </div>
     </div>
   );
 };

@@ -40,12 +40,6 @@ export const FinalCelebration: React.FC = () => {
         height: window.innerHeight,
       });
     }
-
-    const confettiTimer = setTimeout(() => {
-      setIsConfettiActive(false);
-    }, 15000);
-
-    return () => clearTimeout(confettiTimer);
   }, []);
 
   useEffect(() => {
