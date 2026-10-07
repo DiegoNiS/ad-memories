@@ -54,13 +54,13 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.6 } }}
       transition={{ duration: 0.8 }}
-      className="fixed inset-0 z-50 bg-[#FDFFF0] flex flex-col justify-between min-h-[100dvh] h-[100dvh] pt-6 pb-12 px-6 select-none overflow-hidden"
+      className="fixed inset-0 z-50 bg-[#FDFFF0] flex flex-col justify-between min-h-[100dvh] h-[100dvh] pt-14 sm:pt-16 pb-24 sm:pb-28 px-6 select-none overflow-hidden"
     >
       {/* Falling Autumn Leaves particle system in background */}
       <FallingLeaves />
 
       {/* Top Header: Sophisticated Crest with Gold Filigree, Stars, and Initials (D & A) */}
-      <div className="w-full flex flex-col items-center pt-2 z-10 space-y-1.5">
+      <div className="w-full flex flex-col items-center pt-1 z-10 space-y-1.5">
         <div className="flex items-center space-x-3 opacity-70">
           <div className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#D4AF37]" />
           <div className="flex items-center space-x-1.5 text-[#D4AF37]">
@@ -78,7 +78,7 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
       </div>
 
       {/* Middle Center Section: Lowered Proposal Question & Header (Perfectly Balanced Spacing) */}
-      <div className="w-full max-w-sm mx-auto flex flex-col items-center justify-center my-auto z-10 text-center space-y-3 py-2">
+      <div className="w-full max-w-sm mx-auto flex flex-col items-center justify-center my-auto z-10 text-center space-y-3 py-1">
         {/* Animated Heart Icon Badge */}
         <motion.div
           animate={{ scale: [1, 1.14, 1] }}
@@ -99,7 +99,7 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
         </h2>
 
         {/* Floating Persistence Messages space container */}
-        <div className="w-full h-12 flex items-center justify-center pt-2">
+        <div className="w-full h-12 flex items-center justify-center pt-1">
           <AnimatePresence mode="wait">
             {currentMessageIndex >= 0 && (
               <motion.p
@@ -118,7 +118,7 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
       </div>
 
       {/* Bottom Interactive Section: Revealed smoothly after 2 seconds */}
-      <div className="w-full max-w-xs mx-auto z-20 pb-2 relative flex flex-col items-center min-h-[140px] justify-end">
+      <div className="w-full max-w-xs mx-auto z-20 pb-1 relative flex flex-col items-center min-h-[140px] justify-end">
         <AnimatePresence>
           {isRevealed && (
             <motion.div
