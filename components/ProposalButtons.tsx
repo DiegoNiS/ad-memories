@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Sparkles } from 'lucide-react';
+import { Heart, Sparkles, Star } from 'lucide-react';
 import { fontPlayfair, fontGreatVibes } from '@/app/fonts';
 import FallingLeaves from '@/components/FallingLeaves';
 
@@ -30,6 +30,15 @@ const PERSISTENCE_MESSAGES = [
 
 export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) => {
   const [noCount, setNoCount] = useState(0);
+  const [isRevealed, setIsRevealed] = useState(false);
+
+  // 2-second delay reveal timer to let the romantic ambiance settle before showing interactive buttons
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsRevealed(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleNoClick = () => {
     setNoCount((prev) => prev + 1);
@@ -45,163 +54,179 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.6 } }}
       transition={{ duration: 0.8 }}
-      className="fixed inset-0 z-50 bg-[#FDFFF0] flex flex-col justify-between min-h-[100dvh] h-[100dvh] py-10 sm:py-14 px-6 select-none overflow-hidden"
+      className="fixed inset-0 z-50 bg-[#FDFFF0] flex flex-col justify-between min-h-[100dvh] h-[100dvh] pt-6 pb-12 px-6 select-none overflow-hidden"
     >
       {/* Falling Autumn Leaves particle system in background */}
       <FallingLeaves />
 
-      {/* Top Section: Staggered Fade-in Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, ease: "easeOut", delay: 0.2 }}
-        className="w-full text-center space-y-3 pt-2 z-10"
-      >
-        {/* Heart Icon Badge */}
+      {/* Top Header: Sophisticated Crest with Gold Filigree, Stars, and Initials (D & A) */}
+      <div className="w-full flex flex-col items-center pt-2 z-10 space-y-1.5">
+        <div className="flex items-center space-x-3 opacity-70">
+          <div className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#D4AF37]" />
+          <div className="flex items-center space-x-1.5 text-[#D4AF37]">
+            <Star className="w-3 h-3 fill-[#D4AF37]" />
+            <span className={`${fontGreatVibes.className} text-xl text-[#4A3B32] font-bold tracking-widest`}>
+              D &amp; A
+            </span>
+            <Star className="w-3 h-3 fill-[#D4AF37]" />
+          </div>
+          <div className="w-10 h-[1px] bg-gradient-to-l from-transparent to-[#D4AF37]" />
+        </div>
+        <p className={`${fontGreatVibes.className} text-xl text-[#D4AF37] font-semibold tracking-wide text-center drop-shadow-xs`}>
+          Te elijo a ti, todos los días de mi vida ❤️
+        </p>
+      </div>
+
+      {/* Middle Center Section: Lowered Proposal Question & Header (Perfectly Balanced Spacing) */}
+      <div className="w-full max-w-sm mx-auto flex flex-col items-center justify-center my-auto z-10 text-center space-y-3 py-2">
+        {/* Animated Heart Icon Badge */}
         <motion.div
-          animate={{ scale: [1, 1.12, 1] }}
+          animate={{ scale: [1, 1.14, 1] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="inline-flex items-center justify-center text-[#D4AF37] mb-1"
+          className="inline-flex items-center justify-center text-[#D4AF37] mb-0.5"
         >
           <Heart className="w-10 h-10 fill-[#D4AF37]" />
         </motion.div>
 
         {/* Header Text: "Angeles mi amor..." */}
-        <h1 className={`${fontPlayfair.className} text-4xl sm:text-5xl font-extrabold text-[#4A3B32] tracking-wide`}>
+        <h1 className={`${fontPlayfair.className} text-3xl sm:text-4xl font-extrabold text-[#4A3B32] tracking-wide`}>
           Angeles mi amor...
         </h1>
 
         {/* Proposal Question: "¿Quieres ser mi novia?" */}
-        <p className={`${fontPlayfair.className} text-3xl sm:text-4xl font-extrabold text-[#D4AF37] tracking-wider pt-1`}>
+        <h2 className={`${fontPlayfair.className} text-3xl sm:text-4xl font-extrabold text-[#D4AF37] tracking-wider`}>
           ¿Quieres ser mi novia?
-        </p>
-      </motion.div>
+        </h2>
 
-      {/* Middle Section: Floating Persistence Messages */}
-      <div className="w-full my-2 flex items-center justify-center px-4 text-center z-10 min-h-[40px]">
-        <AnimatePresence mode="wait">
-          {currentMessageIndex >= 0 && (
-            <motion.p
-              key={currentMessageIndex}
-              initial={{ opacity: 0, y: 12, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -12, scale: 0.96 }}
-              transition={{ duration: 0.45, ease: "easeOut" }}
-              className={`${fontPlayfair.className} text-xl sm:text-2xl font-bold text-[#4A3B32] italic leading-relaxed max-w-sm drop-shadow-xs`}
+        {/* Floating Persistence Messages space container */}
+        <div className="w-full h-12 flex items-center justify-center pt-2">
+          <AnimatePresence mode="wait">
+            {currentMessageIndex >= 0 && (
+              <motion.p
+                key={currentMessageIndex}
+                initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className={`${fontPlayfair.className} text-lg sm:text-xl font-bold text-[#4A3B32] italic leading-snug drop-shadow-xs`}
+              >
+                &ldquo;{PERSISTENCE_MESSAGES[currentMessageIndex]}&rdquo;
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Bottom Interactive Section: Revealed smoothly after 2 seconds */}
+      <div className="w-full max-w-xs mx-auto z-20 pb-2 relative flex flex-col items-center min-h-[140px] justify-end">
+        <AnimatePresence>
+          {isRevealed && (
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="w-full space-y-3 flex flex-col items-center"
             >
-              &ldquo;{PERSISTENCE_MESSAGES[currentMessageIndex]}&rdquo;
-            </motion.p>
+              {/* YES BUTTON - Vibrant Gold Gradient with Heart Icon */}
+              <motion.button
+                animate={{
+                  scale: [yesScale, yesScale * 1.04, yesScale],
+                  boxShadow: [
+                    "0 0 15px 2px rgba(212,175,55,0.4)",
+                    "0 0 30px 8px rgba(212,175,55,0.7)",
+                    "0 0 15px 2px rgba(212,175,55,0.4)",
+                  ],
+                }}
+                transition={{
+                  scale: { duration: 1.4, repeat: Infinity, ease: "easeInOut" },
+                  boxShadow: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
+                }}
+                whileHover={{ scale: yesScale * 1.04 }}
+                whileTap={{ scale: yesScale * 0.95 }}
+                onClick={onAccept}
+                className={`${fontPlayfair.className} w-full py-4 px-8 rounded-2xl bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#D4AF37] text-[#4A3B32] font-extrabold text-xl sm:text-2xl shadow-2xl flex items-center justify-center space-x-2 border border-white/80 cursor-pointer active:scale-95 transition-all`}
+              >
+                <Sparkles className="w-5 h-5 text-[#4A3B32]" />
+                <span>¡SÍ!</span>
+                <Heart className="w-5 h-5 text-[#4A3B32] fill-[#4A3B32]" />
+              </motion.button>
+
+              {/* NO BUTTON */}
+              <motion.button
+                whileTap={{ scale: 0.92 }}
+                onClick={handleNoClick}
+                className="w-full py-3 px-6 rounded-xl text-[#4A3B32]/75 font-sans-ui font-semibold text-base border border-[#4A3B32]/15 cursor-pointer active:bg-[#4A3B32]/10 transition-colors text-center bg-white/40 backdrop-blur-xs"
+              >
+                No
+              </motion.button>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* Bottom Section: Buttons & Pompompurin Grassland */}
-      <div className="w-full max-w-xs mx-auto space-y-4 flex flex-col items-center justify-center z-20 pb-4 relative">
-        {/* YES BUTTON - Vibrant Gold Gradient with Heart Icon */}
-        <motion.button
-          initial={{ opacity: 0, y: 25 }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            scale: [yesScale, yesScale * 1.04, yesScale],
-            boxShadow: [
-              "0 0 15px 2px rgba(212,175,55,0.4)",
-              "0 0 30px 8px rgba(212,175,55,0.7)",
-              "0 0 15px 2px rgba(212,175,55,0.4)",
-            ],
-          }}
-          transition={{
-            opacity: { duration: 0.7, delay: 0.5 },
-            y: { duration: 0.7, delay: 0.5 },
-            scale: { duration: 1.4, repeat: Infinity, ease: "easeInOut" },
-            boxShadow: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
-          }}
-          whileHover={{ scale: yesScale * 1.04 }}
-          whileTap={{ scale: yesScale * 0.95 }}
-          onClick={onAccept}
-          className={`${fontPlayfair.className} w-full py-4 px-8 rounded-2xl bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#D4AF37] text-[#4A3B32] font-extrabold text-xl sm:text-2xl shadow-2xl flex items-center justify-center space-x-2 border border-white/80 cursor-pointer active:scale-95 transition-all`}
-        >
-          <Sparkles className="w-5 h-5 text-[#4A3B32]" />
-          <span>¡SÍ!</span>
-          <Heart className="w-5 h-5 text-[#4A3B32] fill-[#4A3B32]" />
-        </motion.button>
-
-        {/* NO BUTTON */}
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.7 }}
-          whileTap={{ scale: 0.92 }}
-          onClick={handleNoClick}
-          className="w-full py-3 px-6 rounded-xl text-[#4A3B32]/75 font-sans-ui font-semibold text-base border border-[#4A3B32]/15 cursor-pointer active:bg-[#4A3B32]/10 transition-colors text-center bg-white/40 backdrop-blur-xs"
-        >
-          No
-        </motion.button>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.9 }}
-          className={`${fontGreatVibes.className} text-xl text-[#D4AF37] font-bold text-center pt-1`}
-        >
-          Te elijo a ti, todos los días de mi vida ❤️
-        </motion.p>
-      </div>
-
-      {/* Yellow Grass Pasture & Cute Sanrio PNG Characters (Cinnamoroll & Pompompurin) */}
+      {/* Yellow Grass Pasture & Smart Collision-Free Sanrio Teleporting Component */}
       <div className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none z-10 overflow-hidden">
         {/* Soft Yellow Grassland Silhouette SVG */}
         <svg className="absolute bottom-0 inset-x-0 w-full h-14 fill-[#E8D48A]/50 z-10" viewBox="0 0 400 40" preserveAspectRatio="none">
-          <path d="M 0 40 Q 30 15 60 40 Q 90 20 120 40 Q 150 10 180 40 Q 270 15 300 40 Q 330 20 360 40 Q 380 10 400 40 Z" />
+          <path d="M 0 40 Q 30 15 60 40 Q 90 20 120 40 Q 150 10 180 40 Q 210 25 240 40 Q 270 15 300 40 Q 330 20 360 40 Q 380 10 400 40 Z" />
         </svg>
 
-        {/* Sanrio Teleporting Characters Component (Zero linear X movement, purely static placement + fade in/out + gentle center tilt) */}
-        <SanrioPopups />
+        <SanrioSmartPopups />
       </div>
     </motion.div>
   );
 };
 
-const SANRIO_POSITIONS = ["8vw", "72vw", "38vw", "18vw", "68vw", "28vw", "78vw", "48vw", "12vw", "58vw"];
+// Smart Sanrio Popups Component: Generates random X percentages and prevents overlapping
+const SanrioSmartPopups: React.FC = () => {
+  const [cinPos, setCinPos] = useState<number>(10);
+  const [pomPos, setPomPos] = useState<number>(70);
+  const [cinVisible, setCinVisible] = useState<boolean>(true);
+  const [pomVisible, setPomVisible] = useState<boolean>(true);
 
-const SanrioPopups: React.FC = () => {
-  const [cinnamorollIndex, setCinnamorollIndex] = React.useState(0);
-  const [pompompurinIndex, setPompompurinIndex] = React.useState(1);
-  const [cinVisible, setCinVisible] = React.useState(true);
-  const [pomVisible, setPomVisible] = React.useState(true);
+  // Helper to generate a random X percentage (5% to 75%) ensuring minimum 30% gap from current opposing character
+  const generateNonOverlappingPos = (otherPos: number): number => {
+    let newPos = Math.floor(Math.random() * 70) + 5;
+    let attempts = 0;
+    while (Math.abs(newPos - otherPos) < 28 && attempts < 15) {
+      newPos = Math.floor(Math.random() * 70) + 5;
+      attempts++;
+    }
+    return newPos;
+  };
 
-  React.useEffect(() => {
-    // Cinnamoroll Teleport Timer: Fades out, changes X position instantly while invisible, then fades back in
-    const cinInterval = setInterval(() => {
+  useEffect(() => {
+    // Cinnamoroll Teleport Timer: Fades out, recalculates non-overlapping position, fades in
+    const cinTimer = setInterval(() => {
       setCinVisible(false);
       setTimeout(() => {
-        setCinnamorollIndex((prev) => (prev + 2) % SANRIO_POSITIONS.length);
+        setCinPos((prevCin) => generateNonOverlappingPos(pomPos));
         setCinVisible(true);
-      }, 350); // 350ms quick fade out before jumping
+      }, 350);
     }, 4500);
 
-    // Pompompurin Teleport Timer: Fades out, changes X position instantly while invisible, then fades back in
-    const pomInterval = setInterval(() => {
+    // Pompompurin Teleport Timer
+    const pomTimer = setInterval(() => {
       setPomVisible(false);
       setTimeout(() => {
-        setPompompurinIndex((prev) => (prev + 2 + 1) % SANRIO_POSITIONS.length);
+        setPomPos((prevPom) => generateNonOverlappingPos(cinPos));
         setPomVisible(true);
       }, 350);
-    }, 4800);
+    }, 5200);
 
     return () => {
-      clearInterval(cinInterval);
-      clearInterval(pomInterval);
+      clearInterval(cinTimer);
+      clearInterval(pomTimer);
     };
-  }, []);
+  }, [cinPos, pomPos]);
 
   return (
     <>
-      {/* 1. CINNAMOROLL - Stationary X position, gentle slow center tilt, zero linear movement */}
+      {/* 1. CINNAMOROLL - 1.2x Larger Scale (w-24 h-24), Center-origin tilt wiggle, Raised 12px for grass clearance */}
       <AnimatePresence mode="wait">
         {cinVisible && (
           <motion.div
-            key={`cin-${cinnamorollIndex}`}
+            key={`cin-${cinPos}`}
             initial={{ opacity: 0 }}
             animate={{
               opacity: 0.95,
@@ -213,10 +238,10 @@ const SanrioPopups: React.FC = () => {
               rotate: { duration: 2.2, repeat: Infinity, ease: "easeInOut" },
             }}
             style={{
-              left: SANRIO_POSITIONS[cinnamorollIndex],
+              left: `${cinPos}%`,
               transformOrigin: "center center",
             }}
-            className="w-20 h-20 absolute bottom-4 z-0 flex items-end justify-center pointer-events-none"
+            className="w-24 h-24 absolute bottom-3 z-0 flex items-end justify-center pointer-events-none"
           >
             <img
               src="/extras/Cinnamoroll.png"
@@ -227,11 +252,11 @@ const SanrioPopups: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* 2. POMPOMPURIN - Stationary X position, gentle slow center tilt, zero linear movement */}
+      {/* 2. POMPOMPURIN - 1.2x Proportionate Scale (w-24 h-24), Center-origin tilt wiggle */}
       <AnimatePresence mode="wait">
         {pomVisible && (
           <motion.div
-            key={`pom-${pompompurinIndex}`}
+            key={`pom-${pomPos}`}
             initial={{ opacity: 0 }}
             animate={{
               opacity: 0.95,
@@ -243,10 +268,10 @@ const SanrioPopups: React.FC = () => {
               rotate: { duration: 2.4, repeat: Infinity, ease: "easeInOut" },
             }}
             style={{
-              left: SANRIO_POSITIONS[pompompurinIndex],
+              left: `${pomPos}%`,
               transformOrigin: "center center",
             }}
-            className="w-20 h-20 absolute bottom-1 z-0 flex items-end justify-center pointer-events-none"
+            className="w-24 h-24 absolute bottom-1 z-0 flex items-end justify-center pointer-events-none"
           >
             <img
               src="/extras/Pompompurin.png"
