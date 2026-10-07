@@ -30,7 +30,7 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
         setIsCompleted(true);
         clearInterval(timer);
       }
-    }, 28); // Fast 28ms typewriter reveal
+    }, 28); // 28ms per character reveal
 
     return () => clearInterval(timer);
   }, []);
@@ -105,7 +105,7 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
               onClick={onNext}
               className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#4A3B32] to-[#634E43] text-white font-serif-title font-semibold text-base shadow-xl flex items-center justify-center space-x-2 border border-[#D4AF37]/40 cursor-pointer"
             >
-              <span>Continuar</span>
+              <span>Ver Nuestro Álbum</span>
               <ChevronRight className="w-5 h-5 text-[#D4AF37]" />
             </motion.button>
           )}
