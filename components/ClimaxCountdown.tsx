@@ -12,7 +12,7 @@ const ROMAN_NUMERALS = ["V", "IV", "III", "II", "I"];
 export const ClimaxCountdown: React.FC<ClimaxCountdownProps> = ({ onComplete }) => {
   const [index, setIndex] = useState(0);
   const [isFlashed, setIsFlashed] = useState(false);
-  const [showName, setShowName] = useState(false);
+  const [showIntro, setShowIntro] = useState(false);
   const [showQuestion, setShowQuestion] = useState(false);
 
   useEffect(() => {
@@ -23,26 +23,26 @@ export const ClimaxCountdown: React.FC<ClimaxCountdownProps> = ({ onComplete }) 
       }, 1000);
       return () => clearTimeout(timer);
     } else if (index === ROMAN_NUMERALS.length) {
-      // Immediately after "I", trigger background flash to #FDFFF0
+      // Immediately after "I", trigger background flash to warm white #FDFFF0
       setIsFlashed(true);
       
-      // Reveal "Angeles Saico..." shortly after flash
-      const nameTimer = setTimeout(() => {
-        setShowName(true);
+      // Reveal "Hey mi niña preciosa! Estuve esperando mucho para decirte esto y creo que es un buen momento."
+      const introTimer = setTimeout(() => {
+        setShowIntro(true);
       }, 400);
 
-      // Pause 1.5s after showing name before showing question
+      // Pause 1.8s before showing "¿Quieres ser mi novia?"
       const questionTimer = setTimeout(() => {
         setShowQuestion(true);
-      }, 1900); // 400ms + 1500ms pause
+      }, 2400);
 
-      // Move to proposal buttons after user reads question
+      // Move to proposal buttons after reading
       const completeTimer = setTimeout(() => {
         onComplete();
-      }, 4200);
+      }, 5000);
 
       return () => {
-        clearTimeout(nameTimer);
+        clearTimeout(introTimer);
         clearTimeout(questionTimer);
         clearTimeout(completeTimer);
       };
@@ -51,7 +51,7 @@ export const ClimaxCountdown: React.FC<ClimaxCountdownProps> = ({ onComplete }) 
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-colors duration-200 select-none px-6 ${
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-colors duration-200 select-none px-6 text-center ${
         isFlashed ? 'bg-[#FDFFF0]' : 'bg-[#1A1A1A]'
       }`}
     >
@@ -70,15 +70,15 @@ export const ClimaxCountdown: React.FC<ClimaxCountdownProps> = ({ onComplete }) 
           </motion.div>
         ) : (
           /* Warm White Light Flash Screen Content */
-          <div className="flex flex-col items-center justify-center space-y-6 text-center">
-            {showName && (
+          <div className="flex flex-col items-center justify-center space-y-6 max-w-sm">
+            {showIntro && (
               <motion.h1
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="font-serif-title text-3xl sm:text-4xl font-bold text-[#4A3B32] tracking-wide"
+                className="font-serif-title text-xl sm:text-2xl font-semibold text-[#4A3B32] leading-relaxed"
               >
-                Angeles Saico...
+                Hey mi niña preciosa! Estuve esperando mucho para decirte esto y creo que es un buen momento.
               </motion.h1>
             )}
 
@@ -91,7 +91,7 @@ export const ClimaxCountdown: React.FC<ClimaxCountdownProps> = ({ onComplete }) 
                   stiffness: 200,
                   damping: 15,
                 }}
-                className="font-serif-title text-2xl sm:text-3xl font-extrabold text-[#D4AF37] tracking-wider drop-shadow-sm"
+                className="font-serif-title text-3xl sm:text-4xl font-extrabold text-[#D4AF37] tracking-wider drop-shadow-sm pt-2"
               >
                 ¿Quieres ser mi novia?
               </motion.p>
