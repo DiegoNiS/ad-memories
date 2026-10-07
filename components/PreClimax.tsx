@@ -14,8 +14,8 @@ export const PreClimax: React.FC<PreClimaxProps> = ({ onComplete }) => {
 
   useEffect(() => {
     let index = 0;
-    // Calculated delay per character so full typing takes ~4.2 seconds + 0.8s hold = 5 seconds total
-    const charDelay = Math.floor(4200 / PRE_CLIMAX_TEXT.length);
+    // Calculate typing pace so full sentence typing completes in ~6 seconds + 2 seconds hold = EXACTLY 8 SECONDS
+    const charDelay = Math.floor(6000 / PRE_CLIMAX_TEXT.length);
 
     const timer = setInterval(() => {
       if (index < PRE_CLIMAX_TEXT.length) {
@@ -26,10 +26,10 @@ export const PreClimax: React.FC<PreClimaxProps> = ({ onComplete }) => {
       }
     }, charDelay);
 
-    // Exact 5 seconds total reading duration before auto-proceeding to flash screen
+    // EXACT 8 SECONDS TIMER (8000ms) before auto-transitioning to Step 6
     const completeTimer = setTimeout(() => {
       onComplete();
-    }, 5000);
+    }, 8000);
 
     return () => {
       clearInterval(timer);
@@ -43,13 +43,13 @@ export const PreClimax: React.FC<PreClimaxProps> = ({ onComplete }) => {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="font-serif-title text-xl sm:text-2xl font-bold text-[#FDFBF7] leading-relaxed tracking-wide"
+          className="font-serif-title text-2xl sm:text-3xl font-bold text-[#FDFBF7] leading-relaxed tracking-wide"
         >
           {displayedText}
           <motion.span
             animate={{ opacity: [0, 1, 0] }}
             transition={{ duration: 0.8, repeat: Infinity }}
-            className="inline-block ml-1 w-2.5 h-6 bg-[#D4AF37] align-middle"
+            className="inline-block ml-1.5 w-3 h-7 bg-[#D4AF37] align-middle"
           />
         </motion.p>
       </div>
