@@ -71,17 +71,17 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
         </p>
       </motion.div>
 
-      {/* Middle Section: Breathing Room Space for Persistence Messages (Pure Floating Typography) */}
-      <div className="w-full my-auto flex items-center justify-center px-4 text-center z-10">
+      {/* Middle Section: Breathing Room Space for Persistence Messages (Pure Floating Typography without boxes) */}
+      <div className="w-full my-auto flex items-center justify-center px-4 text-center z-10 min-h-[80px]">
         <AnimatePresence mode="wait">
           {currentMessageIndex >= 0 && (
             <motion.p
               key={currentMessageIndex}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: 12, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -12, scale: 0.96 }}
               transition={{ duration: 0.45, ease: "easeOut" }}
-              className={`${fontPlayfair.className} text-xl sm:text-2xl font-bold text-[#4A3B32] italic leading-relaxed max-w-sm`}
+              className={`${fontPlayfair.className} text-xl sm:text-2xl font-bold text-[#4A3B32] italic leading-relaxed max-w-sm drop-shadow-xs`}
             >
               &ldquo;{PERSISTENCE_MESSAGES[currentMessageIndex]}&rdquo;
             </motion.p>
