@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { fontGreatVibes } from '@/app/fonts';
 import { Sparkles, Heart } from 'lucide-react';
 
@@ -111,26 +111,45 @@ export const PreClimax: React.FC<PreClimaxProps> = ({ onComplete }) => {
         </motion.p>
       </div>
 
-      {/* Bottom Subtitle / Pulsing Tap Prompt */}
-      <div className="pb-4 z-10 min-h-[40px] flex items-center justify-center">
-        {isTypingComplete ? (
-          <motion.p
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: [0.4, 1, 0.4] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="text-sm text-[#D4AF37] font-serif-title tracking-wider font-semibold"
-          >
-            Presiona en cualquier lugar para continuar ✦
-          </motion.p>
-        ) : (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.7 }}
-            className="text-xs text-[#D4AF37] font-serif-title italic tracking-wider"
-          >
-            Para la chica más especial del mundo...
-          </motion.p>
-        )}
+      {/* Bottom Section: Dedicated Subtitles & Little Prince Footer */}
+      <div className="w-full flex flex-col items-center z-10 pb-2 space-y-3">
+        {/* Permanent Subtitle */}
+        <p className="text-xs text-[#D4AF37] font-serif-title italic tracking-wider opacity-80">
+          Para la chica más especial del mundo...
+        </p>
+
+        {/* Pulsing Tap Prompt (Appears smoothly after typing without replacing the subtitle) */}
+        <AnimatePresence>
+          {isTypingComplete && (
+            <motion.p
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="text-sm text-[#FFF8DC] font-serif-title tracking-wider font-semibold drop-shadow-sm"
+            >
+              Presiona en cualquier lugar para continuar ✦
+            </motion.p>
+          )}
+        </AnimatePresence>
+
+        {/* Little Prince Illustration & Quote Banner at Bottom */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 0.9, y: 0 }}
+          transition={{ delay: 1, duration: 1 }}
+          className="flex items-center space-x-3 pt-2 border-t border-[#D4AF37]/20 max-w-xs"
+        >
+          {/* principito_blanco.png PNG Image */}
+          <img
+            src="/extras/principito_blanco.png"
+            alt="El Principito"
+            className="w-12 h-12 object-contain drop-shadow-md shrink-0"
+          />
+          {/* Authentic Little Prince Quote */}
+          <p className={`${fontGreatVibes.className} text-lg sm:text-xl text-[#D4AF37] italic text-left leading-snug font-bold`}>
+            &ldquo;Es mi rosa... no hay otra en el mundo como ella.&rdquo;
+          </p>
+        </motion.div>
       </div>
     </div>
   );
