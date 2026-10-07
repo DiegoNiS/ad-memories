@@ -10,32 +10,67 @@ interface PhotoAlbumProps {
 
 interface PhotoSlide {
   id: number;
+  imageSrc?: string;
   caption: string;
   type: 'photo' | 'blank';
   subtitle?: string;
-  gradient?: string;
 }
 
 const SLIDES: PhotoSlide[] = [
   {
     id: 1,
-    caption: "Nuestros regalos de septiembre... el inicio de nuestra magia.",
+    imageSrc: "/photos/flores-amarillas.png",
+    caption: "Las flores amarillas... el inicio de nuestra magia.",
     type: 'photo',
-    subtitle: "Sep 2026",
-    gradient: "from-[#FDFBF7] via-[#F3E5AB]/30 to-[#EFE6D8]",
+    subtitle: "Nuestra Magia",
   },
   {
     id: 2,
-    caption: "Nuestra primera foto juntos... mi foto favorita de la chica más hermosa.",
+    imageSrc: "/photos/regalo-delivery.png",
+    caption: "El detalle más lindo. Tú cuidando de mí a la distancia.",
     type: 'photo',
-    subtitle: "Momentos Inolvidables",
-    gradient: "from-[#FDFBF7] via-[#D4AF37]/20 to-[#EFE6D8]",
+    subtitle: "A la Distancia",
   },
   {
     id: 3,
+    imageSrc: "/photos/primera-foto.png",
+    caption: "Nuestra primera foto juntos... mi foto favorita de la chica más hermosa.",
+    type: 'photo',
+    subtitle: "Primera Foto",
+  },
+  {
+    id: 4,
+    imageSrc: "/photos/beso-cachete.png",
+    caption: "Llenándote de besitos, porque te lo mereces todo.",
+    type: 'photo',
+    subtitle: "Besitos",
+  },
+  {
+    id: 5,
+    imageSrc: "/photos/abrazados-sonriendo.png",
+    caption: "Mi lugar seguro eres tú.",
+    type: 'photo',
+    subtitle: "Mi Lugar Seguro",
+  },
+  {
+    id: 6,
+    imageSrc: "/photos/abrazados-juntos.png",
+    caption: "Apaciguando tu caos.",
+    type: 'photo',
+    subtitle: "Juntos Siempre",
+  },
+  {
+    id: 7,
+    imageSrc: "/photos/selfie-cuarto.png",
+    caption: "Construyendo nuestra historia oficial.",
+    type: 'photo',
+    subtitle: "Nuestra Historia",
+  },
+  {
+    id: 8,
     caption: "Y el álbum aún está vacío porque tenemos muchísimas cosas por vivir y rezo por vivirlas junto a ti, amándonos, y siendo muy atentos el uno con el otro todo el tiempo. Pero antes, hay algo que quiero decirte...",
     type: 'blank',
-    subtitle: "Nuestro Futuro",
+    subtitle: "Nuestro Futuro Juntos",
   },
 ];
 
@@ -71,41 +106,58 @@ export const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ onNext }) => {
         <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#4A3B32]">
           <Camera className="w-3.5 h-3.5 text-[#D4AF37]" />
           <span className="text-xs font-serif-title font-semibold tracking-wider uppercase">
-            ÁLBUM RECUERDO
+            NUESTROS RECUERDOS ({currentIndex + 1}/{SLIDES.length})
           </span>
         </div>
         <h2 className="font-serif-title text-[#4A3B32] text-xl font-bold">
-          Nuestra Galería de Recuerdos
+          Álbum Fotográfico
         </h2>
       </div>
 
-      {/* Polaroid Card Area */}
-      <div className="w-full my-auto flex flex-col items-center justify-center relative py-4">
+      {/* Polaroid Book Card Area */}
+      <div className="w-full my-auto flex flex-col items-center justify-center relative py-3">
         <AnimatePresence mode="wait">
           <motion.div
             key={slide.id}
-            initial={{ opacity: 0, scale: 0.9, rotate: currentIndex % 2 === 0 ? -3 : 3 }}
+            initial={{ opacity: 0, scale: 0.9, rotate: currentIndex % 2 === 0 ? -2 : 2 }}
             animate={{ opacity: 1, scale: 1, rotate: currentIndex % 2 === 0 ? -1 : 1 }}
             exit={{ opacity: 0, scale: 0.9, rotate: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="w-full max-w-[320px] bg-white rounded-xl shadow-2xl p-4 border border-[#D4AF37]/30 flex flex-col items-center space-y-4 relative"
+            transition={{ duration: 0.45, ease: "easeOut" }}
+            className="w-full max-w-[320px] bg-white rounded-xl shadow-2xl p-4 border border-[#D4AF37]/35 flex flex-col items-center space-y-3 relative"
           >
-            {/* Tape sticker effect at top */}
-            <div className="absolute -top-3 w-20 h-6 bg-[#D4AF37]/25 backdrop-blur-xs rounded-sm transform -rotate-2 border border-white/60 shadow-xs" />
+            {/* Washi tape sticker at top */}
+            <div className="absolute -top-3 w-20 h-6 bg-[#D4AF37]/25 backdrop-blur-xs rounded-xs transform -rotate-1 border border-white/70 shadow-xs" />
 
             {/* Photo Viewport Frame */}
             {slide.type === 'photo' ? (
-              <div className="w-full aspect-[4/3] rounded-lg bg-gradient-to-tr from-[#FDFBF7] via-[#FAF6F0] to-[#EFE6D8] border border-[#4A3B32]/10 flex flex-col items-center justify-center p-4 relative overflow-hidden shadow-inner">
-                {/* Decorative background camera graphic */}
-                <Camera className="w-12 h-12 text-[#D4AF37]/40 mb-2" />
-                <span className="text-xs font-serif-title font-bold text-[#4A3B32]/60 tracking-wider">
-                  {slide.subtitle}
-                </span>
-                <Heart className="w-4 h-4 text-[#D4AF37] fill-[#D4AF37] absolute bottom-3 right-3" />
+              <div className="w-full aspect-[4/3] rounded-lg bg-[#FDFBF7] border border-[#4A3B32]/10 overflow-hidden relative shadow-inner flex items-center justify-center">
+                {slide.imageSrc ? (
+                  /* Real Photo image */
+                  <img
+                    src={slide.imageSrc}
+                    alt={slide.caption}
+                    className="w-full h-full object-cover rounded-lg"
+                    onError={(e) => {
+                      // Fallback if image path has different extension
+                      const target = e.currentTarget;
+                      if (target.src.endsWith('.png')) {
+                        target.src = target.src.replace('.png', '.jpg');
+                      }
+                    }}
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center">
+                    <Camera className="w-10 h-10 text-[#D4AF37]/40 mb-1" />
+                    <span className="text-xs font-serif-title font-bold text-[#4A3B32]/60">
+                      {slide.subtitle}
+                    </span>
+                  </div>
+                )}
+                <Heart className="w-4 h-4 text-[#D4AF37] fill-[#D4AF37] absolute bottom-2.5 right-2.5 drop-shadow" />
               </div>
             ) : (
-              /* Blank page with elegant golden message */
-              <div className="w-full min-h-[160px] rounded-lg bg-gradient-to-br from-[#FFFDF9] to-[#FDFBF7] border-2 border-dashed border-[#D4AF37]/50 flex flex-col items-center justify-center p-5 text-center shadow-inner">
+              /* Blank Page (Slide 8) with golden message */
+              <div className="w-full min-h-[190px] rounded-lg bg-gradient-to-br from-[#FFFDF9] to-[#FDFBF7] border-2 border-dashed border-[#D4AF37]/50 flex flex-col items-center justify-center p-5 text-center shadow-inner">
                 <Sparkles className="w-8 h-8 text-[#D4AF37] mb-2" />
                 <p className="text-xs font-serif-title italic text-[#4A3B32] leading-relaxed font-semibold">
                   {slide.caption}
@@ -113,20 +165,20 @@ export const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ onNext }) => {
               </div>
             )}
 
-            {/* Polaroid Bottom Caption (for photo slides) */}
+            {/* Polaroid Bottom Caption */}
             {slide.type === 'photo' && (
-              <p className="font-serif-title text-center text-sm font-semibold text-[#4A3B32] italic leading-snug px-2">
+              <p className="font-serif-title text-center text-xs sm:text-sm font-semibold text-[#4A3B32] italic leading-snug px-1">
                 &ldquo;{slide.caption}&rdquo;
               </p>
             )}
 
-            {/* Slide Index Indicator */}
-            <div className="flex space-x-1.5 pt-1">
+            {/* Slide Index Progress Dots */}
+            <div className="flex space-x-1 pt-1">
               {SLIDES.map((_, i) => (
                 <div
                   key={i}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    i === currentIndex ? 'bg-[#D4AF37] w-5' : 'bg-[#4A3B32]/20'
+                  className={`w-1.5 h-1.5 rounded-full transition-all ${
+                    i === currentIndex ? 'bg-[#D4AF37] w-4' : 'bg-[#4A3B32]/20'
                   }`}
                 />
               ))}
