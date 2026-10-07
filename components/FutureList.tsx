@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, Circle, Sparkles, ChevronRight, Heart } from 'lucide-react';
+import { CheckCircle2, Circle, ChevronRight, Heart, Sparkles, Utensils, Camera, Compass, Home } from 'lucide-react';
 
 interface FutureListProps {
   onNext: () => void;
@@ -12,34 +12,40 @@ interface BucketItem {
   id: number;
   text: string;
   badge: string;
+  icon: React.ReactNode;
 }
 
 const BUCKET_ITEMS: BucketItem[] = [
   {
     id: 1,
     text: "Una pijamada real con mascarillas, karaoke y maratón de nuestras películas favoritas.",
-    badge: "Fácil & Acogedor"
+    badge: "Pijamada & Karaoke",
+    icon: <Sparkles className="w-4 h-4 text-[#D4AF37]" />,
   },
   {
     id: 2,
     text: "Un duelo en la cocina: tu asado y pollo a la olla contra mi lomo saltado, acompañados de un buen vino.",
-    badge: "Delicioso"
+    badge: "Duelo Culinario",
+    icon: <Utensils className="w-4 h-4 text-[#D4AF37]" />,
   },
   {
     id: 3,
     text: "Ser tu fotógrafo personal, capturando lo preciosa y perfecta que eres en cada atardecer.",
-    badge: "Mágico"
+    badge: "Atardeceres",
+    icon: <Camera className="w-4 h-4 text-[#D4AF37]" />,
   },
   {
     id: 4,
     text: "Volar cometas juntos, correr en cuatrimoto y acampar bajo las estrellas.",
-    badge: "Aventura"
+    badge: "Aventura Épica",
+    icon: <Compass className="w-4 h-4 text-[#D4AF37]" />,
   },
   {
     id: 5,
     text: "Construir nuestro hogar seguro y eterno, con jardín, perritos, gatitos y patos que no nos comeremos, donde siempre te elegiré todos los días de mi vida.",
-    badge: "Épico & Para Siempre"
-  }
+    badge: "Nuestro Hogar Eterno",
+    icon: <Home className="w-4 h-4 text-[#D4AF37]" />,
+  },
 ];
 
 export const FutureList: React.FC<FutureListProps> = ({ onNext }) => {
@@ -71,12 +77,12 @@ export const FutureList: React.FC<FutureListProps> = ({ onNext }) => {
         <h2 className="font-serif-title text-[#4A3B32] text-2xl font-bold">
           La Lista de Nuestro Futuro
         </h2>
-        <p className="text-xs text-[#4A3B32]/70 font-sans italic">
-          Promesas de todo lo que vamos a vivir juntos...
+        <p className="text-xs text-[#4A3B32]/75 font-sans italic">
+          Promesas de todo lo que vamos a construir juntos...
         </p>
       </div>
 
-      {/* List container */}
+      {/* Elegant Non-Generic List Container */}
       <div className="w-full my-3 space-y-3 flex-1 overflow-y-auto pr-1">
         {BUCKET_ITEMS.map((item, idx) => {
           const isChecked = checkedIds.includes(item.id);
@@ -85,15 +91,15 @@ export const FutureList: React.FC<FutureListProps> = ({ onNext }) => {
               key={item.id}
               initial={{ opacity: 0, x: -15 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.1, duration: 0.4 }}
+              transition={{ delay: idx * 0.08, duration: 0.4 }}
               onClick={() => toggleCheck(item.id)}
-              className={`p-3.5 rounded-2xl ios-glass border transition-all cursor-pointer flex items-start space-x-3 shadow-md ${
+              className={`p-4 rounded-2xl ios-glass border transition-all cursor-pointer flex items-start space-x-3.5 shadow-md ${
                 isChecked
-                  ? 'border-[#D4AF37] bg-white/80'
+                  ? 'border-[#D4AF37]/60 bg-white/80'
                   : 'border-[#4A3B32]/15 opacity-75'
               }`}
             >
-              <button className="mt-0.5 shrink-0 text-[#D4AF37]">
+              <button className="mt-1 shrink-0 text-[#D4AF37] active:scale-90 transition-transform">
                 {isChecked ? (
                   <CheckCircle2 className="w-5 h-5 fill-[#D4AF37] text-white" />
                 ) : (
@@ -103,14 +109,17 @@ export const FutureList: React.FC<FutureListProps> = ({ onNext }) => {
 
               <div className="flex-1 space-y-1">
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-sans font-bold text-[#D4AF37] uppercase tracking-wider">
-                    {item.badge}
-                  </span>
+                  <div className="flex items-center space-x-1.5">
+                    {item.icon}
+                    <span className="text-[10px] font-serif-title font-bold text-[#D4AF37] uppercase tracking-wider">
+                      {item.badge}
+                    </span>
+                  </div>
                   <span className="text-[10px] font-serif-title text-[#4A3B32]/50 font-bold">
                     #{item.id}
                   </span>
                 </div>
-                <p className="text-xs font-sans text-[#4A3B32] leading-relaxed font-medium">
+                <p className="text-xs sm:text-sm font-sans text-[#4A3B32] leading-relaxed font-medium">
                   {item.text}
                 </p>
               </div>
