@@ -121,7 +121,7 @@ export const PreClimax: React.FC<PreClimaxProps> = ({ onComplete }) => {
           className="w-52 h-52 sm:w-60 sm:h-60 relative flex items-center justify-center -mb-2"
         >
           <img
-            src="/extras/principito_blanco.png"
+            src={`${process.env.NODE_ENV === 'production' ? '/ad-memories' : ''}/extras/principito_blanco.png`}
             alt="El Principito"
             className="w-full h-full object-contain drop-shadow-[0_0_18px_rgba(212,175,55,0.45)]"
           />

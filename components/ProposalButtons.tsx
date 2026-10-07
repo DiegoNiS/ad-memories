@@ -279,7 +279,7 @@ const SanrioSmartPopups: React.FC = () => {
             className="w-24 h-24 absolute bottom-3 z-0 flex items-end justify-center pointer-events-none"
           >
             <img
-              src="/extras/Cinnamoroll.png"
+              src={`${process.env.NODE_ENV === 'production' ? '/ad-memories' : ''}/extras/Cinnamoroll.png`}
               alt="Cinnamoroll"
               className="w-full h-auto object-contain drop-shadow-md"
             />
@@ -309,7 +309,7 @@ const SanrioSmartPopups: React.FC = () => {
             className="w-24 h-24 absolute bottom-1 z-0 flex items-end justify-center pointer-events-none"
           >
             <img
-              src="/extras/Pompompurin.png"
+              src={`${process.env.NODE_ENV === 'production' ? '/ad-memories' : ''}/extras/Pompompurin.png`}
               alt="Pompompurin"
               className="w-full h-auto object-contain drop-shadow-md"
             />
