@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Sparkles } from 'lucide-react';
-import { fontPlayfair } from '@/app/fonts';
+import { fontPlayfair, fontGreatVibes } from '@/app/fonts';
+import FallingLeaves from '@/components/FallingLeaves';
 
 interface ProposalButtonsProps {
   onAccept: () => void;
@@ -39,106 +40,95 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
   const currentMessageIndex = noCount > 0 ? (noCount - 1) % PERSISTENCE_MESSAGES.length : -1;
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#FDFFF0] flex flex-col items-center justify-between min-h-[100dvh] pt-[env(safe-area-inset-top,20px)] pb-[env(safe-area-inset-bottom,20px)] px-4 select-none">
-      {/* Title & Styled Proposal Question Header */}
+    <div className="fixed inset-0 z-50 bg-[#FDFFF0] flex flex-col justify-between min-h-[100dvh] h-[100dvh] py-12 sm:py-16 px-6 select-none overflow-hidden">
+      {/* Falling Autumn Leaves particle system in background */}
+      <FallingLeaves />
+
+      {/* Top Section: Header with ZERO box styling (pure typography floating over background) */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9, y: 15 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
+        initial={{ opacity: 0, y: -15 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full text-center space-y-4 pt-6"
+        className="w-full text-center space-y-3 pt-2 z-10"
       >
+        {/* Heart Icon Badge without heavy card box */}
         <motion.div
           animate={{ scale: [1, 1.12, 1] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-tr from-[#D4AF37] via-[#E5C158] to-[#F3E5AB] shadow-xl border-2 border-white mb-1"
+          className="inline-flex items-center justify-center text-[#D4AF37] mb-1"
         >
-          <Heart className="w-8 h-8 text-[#4A3B32] fill-[#4A3B32]" />
+          <Heart className="w-10 h-10 fill-[#D4AF37]" />
         </motion.div>
 
-        {/* Name Display */}
+        {/* Header Text: "Angeles mi amor..." (Zero boxes, pure typography) */}
         <h1 className={`${fontPlayfair.className} text-4xl sm:text-5xl font-extrabold text-[#4A3B32] tracking-wide`}>
-          Angeles...
+          Angeles mi amor...
         </h1>
 
-        {/* Highly Stylized Proposal Question */}
-        <div className="inline-block px-5 py-2.5 rounded-2xl bg-white/80 backdrop-blur-md border border-[#D4AF37]/40 shadow-lg">
-          <p className={`${fontPlayfair.className} text-2xl sm:text-3xl font-extrabold text-[#D4AF37] tracking-wider drop-shadow-xs`}>
-            ¿Quieres ser mi novia?
-          </p>
-        </div>
+        {/* Proposal Question: "¿Quieres ser mi novia?" (Zero boxes, pure typography) */}
+        <p className={`${fontPlayfair.className} text-3xl sm:text-4xl font-extrabold text-[#D4AF37] tracking-wider pt-1`}>
+          ¿Quieres ser mi novia?
+        </p>
       </motion.div>
 
-      {/* EXTERNAL PERSISTENCE MESSAGE (Appears OUTSIDE the buttons) */}
-      <div className="w-full h-16 flex items-center justify-center px-4 my-2 text-center">
+      {/* Middle Section: Breathing Room Space for Persistence Messages (Pure Floating Typography) */}
+      <div className="w-full my-auto flex items-center justify-center px-4 text-center z-10">
         <AnimatePresence mode="wait">
           {currentMessageIndex >= 0 && (
-            <motion.div
+            <motion.p
               key={currentMessageIndex}
-              initial={{ opacity: 0, y: 8, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.95 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.45, ease: "easeOut" }}
-              className="px-4 py-2.5 rounded-xl bg-white/90 backdrop-blur-md border border-[#D4AF37]/40 shadow-sm"
+              className={`${fontPlayfair.className} text-xl sm:text-2xl font-bold text-[#4A3B32] italic leading-relaxed max-w-sm`}
             >
-              <p className={`${fontPlayfair.className} text-base sm:text-lg font-semibold text-[#4A3B32] italic`}>
-                &ldquo;{PERSISTENCE_MESSAGES[currentMessageIndex]}&rdquo;
-              </p>
-            </motion.div>
+              &ldquo;{PERSISTENCE_MESSAGES[currentMessageIndex]}&rdquo;
+            </motion.p>
           )}
         </AnimatePresence>
       </div>
 
-      {/* BUTTONS CONTAINER */}
-      <div className="w-full max-w-xs space-y-5 my-auto py-4 flex flex-col items-center justify-center relative">
-        {/* YES BUTTON - Uses clean SVG Heart instead of raw emoji */}
+      {/* Bottom Section: Buttons */}
+      <div className="w-full max-w-xs mx-auto space-y-4 flex flex-col items-center justify-center z-10 pb-2">
+        {/* YES BUTTON - Vibrant Gold Gradient, Throbbing like a beating heart */}
         <motion.button
           whileHover={{ scale: yesScale * 1.04 }}
           whileTap={{ scale: yesScale * 0.95 }}
-          animate={
-            noCount > 0
-              ? {
-                  scale: [yesScale, yesScale * 1.05, yesScale],
-                  rotate: [-1, 1, 0],
-                  boxShadow: [
-                    "0 0 15px 2px rgba(212,175,55,0.4)",
-                    "0 0 35px 10px rgba(212,175,55,0.8)",
-                    "0 0 15px 2px rgba(212,175,55,0.4)",
-                  ],
-                }
-              : {
-                  scale: 1,
-                  boxShadow: [
-                    "0 0 15px 2px rgba(212,175,55,0.4)",
-                    "0 0 25px 5px rgba(212,175,55,0.6)",
-                    "0 0 15px 2px rgba(212,175,55,0.4)",
-                  ],
-                }
-          }
+          animate={{
+            scale: [yesScale, yesScale * 1.05, yesScale],
+            rotate: noCount > 0 ? [-1, 1, 0] : 0,
+            boxShadow: [
+              "0 0 15px 2px rgba(212,175,55,0.4)",
+              "0 0 35px 10px rgba(212,175,55,0.8)",
+              "0 0 15px 2px rgba(212,175,55,0.4)",
+            ],
+          }}
           transition={{
-            scale: { duration: 0.8, repeat: Infinity, ease: "easeInOut" },
+            scale: { duration: 1.2, repeat: Infinity, ease: "easeInOut" },
             boxShadow: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
           }}
           onClick={onAccept}
-          className={`${fontPlayfair.className} w-full py-4 px-8 rounded-2xl bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#D4AF37] text-[#4A3B32] font-extrabold text-xl sm:text-2xl shadow-2xl flex items-center justify-center space-x-2 border-2 border-white/80 cursor-pointer active:scale-95 transition-all z-20`}
+          className={`${fontPlayfair.className} w-full py-4 px-8 rounded-2xl bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#D4AF37] text-[#4A3B32] font-extrabold text-xl sm:text-2xl shadow-2xl flex items-center justify-center space-x-2 border border-white/80 cursor-pointer active:scale-95 transition-all`}
         >
           <Sparkles className="w-5 h-5 text-[#4A3B32]" />
           <span>¡SÍ!</span>
           <Heart className="w-5 h-5 text-[#4A3B32] fill-[#4A3B32]" />
         </motion.button>
 
-        {/* NO BUTTON - Text NEVER changes ("No") and stays STATIC in position */}
+        {/* NO BUTTON - Minimal, dark text, static position */}
         <motion.button
           whileTap={{ scale: 0.92 }}
           onClick={handleNoClick}
-          className="w-full py-3.5 px-6 rounded-xl bg-white/80 backdrop-blur-md text-[#4A3B32]/85 font-sans-ui font-semibold text-base border border-[#4A3B32]/20 shadow-md cursor-pointer active:bg-[#4A3B32]/10 transition-colors text-center z-10"
+          className="w-full py-3 px-6 rounded-xl text-[#4A3B32]/75 font-sans-ui font-semibold text-base border border-[#4A3B32]/15 cursor-pointer active:bg-[#4A3B32]/10 transition-colors text-center"
         >
           No
         </motion.button>
-      </div>
 
-      <p className="text-xs sm:text-sm text-[#4A3B32]/70 font-sans-ui italic text-center pb-4 font-medium">
-        Te elijo a ti, todos los días de mi vida ❤️
-      </p>
+        <p className={`${fontGreatVibes.className} text-xl text-[#D4AF37] font-bold text-center pt-1`}>
+          Te elijo a ti, todos los días de mi vida ❤️
+        </p>
+      </div>
     </div>
   );
 };
