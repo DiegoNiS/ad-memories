@@ -16,52 +16,54 @@ interface PhotoSlide {
   subtitle?: string;
 }
 
+const BASE_PATH = "/ad-memories";
+
 const SLIDES: PhotoSlide[] = [
   {
     id: 1,
-    imageSrc: "/photos/flores-amarillas.png",
+    imageSrc: `${BASE_PATH}/photos/flores-amarillas.png`,
     caption: "Las flores amarillas... el inicio de nuestra magia.",
     type: 'photo',
     subtitle: "Nuestra Magia",
   },
   {
     id: 2,
-    imageSrc: "/photos/regalo-delivery.png",
+    imageSrc: `${BASE_PATH}/photos/regalo-delivery.png`,
     caption: "Tú cuidando de mí a la distancia. Tienes un corazón precioso.",
     type: 'photo',
     subtitle: "Tu Lindo Corazón",
   },
   {
     id: 3,
-    imageSrc: "/photos/primera-foto.png",
+    imageSrc: `${BASE_PATH}/photos/primera-foto.png`,
     caption: "Nuestra primera foto juntos... mi foto favorita de la chica más hermosa.",
     type: 'photo',
     subtitle: "Primera Foto Juntos",
   },
   {
     id: 4,
-    imageSrc: "/photos/beso-cachete.png",
+    imageSrc: `${BASE_PATH}/photos/beso-cachete.png`,
     caption: "Llenándote de besitos, porque me haces inmensamente feliz.",
     type: 'photo',
     subtitle: "Inmensamente Feliz",
   },
   {
     id: 5,
-    imageSrc: "/photos/abrazados-sonriendo.png",
+    imageSrc: `${BASE_PATH}/photos/abrazados-sonriendo.png`,
     caption: "Mi lugar seguro eres tú. La tranquilidad que siento a tu lado es única.",
     type: 'photo',
     subtitle: "Mi Lugar Seguro",
   },
   {
     id: 6,
-    imageSrc: "/photos/abrazados-juntos.png",
+    imageSrc: `${BASE_PATH}/photos/abrazados-juntos.png`,
     caption: "No hay momento en que no admire lo perfecta que eres.",
     type: 'photo',
     subtitle: "Admirable & Perfecta",
   },
   {
     id: 7,
-    imageSrc: "/photos/selfie-cuarto.png",
+    imageSrc: `${BASE_PATH}/photos/selfie-cuarto.png`,
     caption: "Construyendo nuestra historia oficial, siendo el hombre más afortunado.",
     type: 'photo',
     subtitle: "El Hombre Más Afortunado",

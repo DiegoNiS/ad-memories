@@ -20,6 +20,8 @@ const SUNFLOWER_COLORS = [
   '#FEF3C7',
 ];
 
+const BASE_PATH = "/ad-memories";
+
 export const FinalCelebration: React.FC = () => {
   const [acceptedDate, setAcceptedDate] = useState<Date>(new Date());
   const [elapsed, setElapsed] = useState<TimeElapsed>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -98,7 +100,7 @@ export const FinalCelebration: React.FC = () => {
         >
           <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-xl overflow-hidden relative shadow-inner border border-[#4A3B32]/10">
             <img
-              src="/photos/primera-foto.png"
+              src={`${BASE_PATH}/photos/primera-foto.png`}
               alt="Nuestra foto favorita"
               className="w-full h-full object-cover"
               onError={(e) => {
@@ -106,7 +108,7 @@ export const FinalCelebration: React.FC = () => {
                 if (target.src.endsWith('.png')) {
                   target.src = target.src.replace('.png', '.jpg');
                 } else {
-                  target.src = '/photos/abrazados-sonriendo.png';
+                  target.src = `${BASE_PATH}/photos/abrazados-sonriendo.png`;
                 }
               }}
             />
