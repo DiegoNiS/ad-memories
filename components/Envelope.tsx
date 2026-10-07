@@ -1,0 +1,130 @@
+'use client';
+
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Heart } from 'lucide-react';
+
+interface EnvelopeProps {
+  onOpen: () => void;
+}
+
+export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleSealClick = () => {
+    if (isOpen) return;
+    setIsOpen(true);
+    // Give animation time to play out spring physics before proceeding
+    setTimeout(() => {
+      onOpen();
+    }, 1400);
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[75dvh] w-full px-4 select-none">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{
+          type: "spring",
+          stiffness: 260,
+          damping: 20,
+        }}
+        className="relative w-full max-w-[340px] aspect-[4/3] flex items-center justify-center"
+      >
+        {/* Shadow glow around envelope */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/20 to-[#4A3B32]/10 blur-2xl rounded-2xl" />
+
+        {/* Envelope Base Container */}
+        <div className="relative w-full h-full bg-[#FAF6F0] rounded-xl border border-[#D4AF37]/40 shadow-2xl overflow-hidden flex flex-col justify-end">
+          
+          {/* Card preview sliding up */}
+          <motion.div
+            initial={{ y: 60, opacity: 0 }}
+            animate={isOpen ? { y: -70, opacity: 1 } : { y: 60, opacity: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 140,
+              damping: 18,
+              delay: 0.3,
+            }}
+            className="absolute top-4 left-4 right-4 h-44 bg-white/90 backdrop-blur-md rounded-lg border border-[#D4AF37]/30 shadow-lg p-4 flex flex-col justify-between"
+          >
+            <div className="flex justify-between items-center border-b border-[#D4AF37]/20 pb-2">
+              <span className="font-serif-title text-[#4A3B32] font-semibold text-sm">
+                Para: Angeles
+              </span>
+              <Heart className="w-4 h-4 text-[#D4AF37] fill-[#D4AF37]" />
+            </div>
+            <p className="text-xs text-[#4A3B32]/70 italic line-clamp-3 leading-relaxed font-sans">
+              "Llegaste cuando no buscaba nada, pero me di cuenta de que eras exactamente lo que me faltaba..."
+            </p>
+            <span className="text-[10px] text-right text-[#D4AF37] font-semibold tracking-wider uppercase">
+              Toca para leer →
+            </span>
+          </motion.div>
+
+          {/* Envelope Pocket Body */}
+          <div className="absolute inset-0 border-t-[70px] border-l-[170px] border-r-[170px] border-b-[120px] border-transparent border-b-[#F3ECE0] border-l-[#EFE6D8]/90 border-r-[#EFE6D8]/90 pointer-events-none z-10" />
+
+          {/* Envelope Flap (Top triangle) */}
+          <motion.div
+            initial={{ rotateX: 0 }}
+            animate={isOpen ? { rotateX: 180 } : { rotateX: 0 }}
+            transition={{
+              duration: 0.6,
+              ease: [0.4, 0, 0.2, 1],
+            }}
+            style={{ transformOrigin: "top" }}
+            className="absolute top-0 left-0 right-0 h-0 border-l-[170px] border-r-[170px] border-t-[120px] border-l-transparent border-r-transparent border-t-[#E6DBCB] z-20 shadow-md"
+          />
+
+          {/* Wax Seal Button */}
+          <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-auto">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.92 }}
+              animate={
+                isOpen
+                  ? { scale: [1, 1.2, 0], opacity: 0 }
+                  : {
+                      scale: [1, 1.04, 1],
+                      boxShadow: [
+                        "0 0 0 0px rgba(212,175,55,0.4)",
+                        "0 0 0 10px rgba(212,175,55,0)",
+                        "0 0 0 0px rgba(212,175,55,0.4)",
+                      ],
+                    }
+              }
+              transition={
+                isOpen
+                  ? { duration: 0.4 }
+                  : { duration: 2, repeat: Infinity, ease: "easeInOut" }
+              }
+              onClick={handleSealClick}
+              className="w-16 h-16 rounded-full bg-gradient-to-br from-[#D4AF37] via-[#B8860B] to-[#8B6508] p-1 shadow-xl flex items-center justify-center border-2 border-[#FFF8DC]/60 cursor-pointer active:scale-95 transition-transform"
+            >
+              <div className="w-full h-full rounded-full border border-dashed border-[#FFF8DC]/70 flex flex-col items-center justify-center bg-[#A67C1E]/40 backdrop-blur-xs">
+                <span className="font-serif-title text-white text-xs tracking-widest font-bold drop-shadow">
+                  A & D
+                </span>
+                <Heart className="w-2.5 h-2.5 text-white/90 fill-white mt-0.5" />
+              </div>
+            </motion.button>
+          </div>
+        </div>
+
+        {/* Prompt label underneath envelope */}
+        <motion.p
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute -bottom-10 text-xs text-[#4A3B32]/70 font-sans tracking-wide"
+        >
+          Presiona el sello de cera para abrir
+        </motion.p>
+      </motion.div>
+    </div>
+  );
+};
+
+export default Envelope;
