@@ -5,23 +5,24 @@ import { AnimatePresence, motion } from 'framer-motion';
 import BackgroundPattern from '@/components/BackgroundPattern';
 import Envelope from '@/components/Envelope';
 import LoveLetter from '@/components/LoveLetter';
+import FutureList from '@/components/FutureList';
 import PhotoAlbum from '@/components/PhotoAlbum';
 import FirstCounter from '@/components/FirstCounter';
-import ClimaxCountdown from '@/components/ClimaxCountdown';
+import PreClimax from '@/components/PreClimax';
 import ProposalButtons from '@/components/ProposalButtons';
 import FinalCelebration from '@/components/FinalCelebration';
 
 export default function Home() {
   const [step, setStep] = useState<number>(1);
-  const [isClimaxDone, setIsClimaxDone] = useState<boolean>(false);
+  const [isPreClimaxDone, setIsPreClimaxDone] = useState<boolean>(false);
 
   const nextStep = () => {
-    setStep((prev) => Math.min(prev + 1, 6));
+    setStep((prev) => Math.min(prev + 1, 7));
   };
 
   return (
     <main className="relative min-h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-center pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
-      {/* Background pattern - Easter egg letter D, birds, flowers, Pompompurin */}
+      {/* Background pattern - Easter egg letter D with 'Diego & Angeles', birds, flowers, Pompompurin */}
       <BackgroundPattern />
 
       {/* Main App Container */}
@@ -62,39 +63,52 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="w-full"
             >
-              <PhotoAlbum onNext={nextStep} />
+              <FutureList onNext={nextStep} />
             </motion.div>
           )}
 
-          {step === 4 && !isClimaxDone && (
+          {step === 4 && (
             <motion.div
-              key="step-4-counter"
+              key="step-4"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 1.05 }}
               transition={{ duration: 0.5 }}
               className="w-full"
             >
-              <FirstCounter onNext={() => setIsClimaxDone(true)} />
+              <PhotoAlbum onNext={nextStep} />
             </motion.div>
           )}
 
-          {step === 4 && isClimaxDone && (
+          {step === 5 && !isPreClimaxDone && (
             <motion.div
-              key="step-4-climax"
+              key="step-5-counter"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              transition={{ duration: 0.5 }}
+              className="w-full"
+            >
+              <FirstCounter onNext={() => setIsPreClimaxDone(true)} />
+            </motion.div>
+          )}
+
+          {step === 5 && isPreClimaxDone && (
+            <motion.div
+              key="step-5-preclimax"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
               className="w-full"
             >
-              <ClimaxCountdown onComplete={nextStep} />
+              <PreClimax onComplete={nextStep} />
             </motion.div>
           )}
 
-          {step === 5 && (
+          {step === 6 && (
             <motion.div
-              key="step-5"
+              key="step-6"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.6 } }}
@@ -105,9 +119,9 @@ export default function Home() {
             </motion.div>
           )}
 
-          {step === 6 && (
+          {step === 7 && (
             <motion.div
-              key="step-6"
+              key="step-7"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7 }}

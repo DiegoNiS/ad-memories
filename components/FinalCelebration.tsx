@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import ReactConfetti from 'react-confetti';
-import { Heart, Sparkles, Sun, Compass } from 'lucide-react';
+import { Heart, Sparkles, Sun } from 'lucide-react';
 import { recordProposalAcceptance } from '@/lib/supabaseClient';
 import { getTimeElapsed, padZero, TimeElapsed } from '@/utils/timeHelpers';
 
@@ -25,7 +25,7 @@ export const FinalCelebration: React.FC = () => {
   const [isConfettiActive, setIsConfettiActive] = useState(true);
 
   useEffect(() => {
-    // Quiet POST to Supabase table: milestones, type: proposal_accepted
+    // Quiet POST to Supabase table: milestones, type: proposal
     recordProposalAcceptance().then((timestamp) => {
       setAcceptedDate(timestamp);
     });
@@ -81,7 +81,7 @@ export const FinalCelebration: React.FC = () => {
       )}
 
       {/* Main Staggered Header */}
-      <div className="w-full text-center space-y-3 pt-4 z-10">
+      <div className="w-full text-center space-y-4 pt-6 z-10">
         <motion.div
           variants={{
             hidden: { opacity: 0, scale: 0.5 },
@@ -107,7 +107,7 @@ export const FinalCelebration: React.FC = () => {
             hidden: { opacity: 0, y: 15 },
             visible: { opacity: 1, y: 0 },
           }}
-          className="text-sm font-serif-title italic text-[#4A3B32]/85 px-4 leading-relaxed"
+          className="text-base font-cursive italic text-[#4A3B32]/90 px-4 leading-relaxed font-semibold"
         >
           &ldquo;Eres mi niña hermosa, mi princesita y mi lugar seguro. Te prometo cuidar de ti con toda mi alma siempre.&rdquo;
         </motion.p>
@@ -119,7 +119,7 @@ export const FinalCelebration: React.FC = () => {
           hidden: { opacity: 0, scale: 0.9 },
           visible: { opacity: 1, scale: 1 },
         }}
-        className="w-full my-auto py-4 z-10 space-y-3"
+        className="w-full my-auto py-6 z-10 space-y-3"
       >
         <div className="text-center space-y-1">
           <div className="inline-flex items-center space-x-1.5 text-[#D4AF37] text-xs font-serif-title uppercase font-bold tracking-widest">
@@ -181,38 +181,17 @@ export const FinalCelebration: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Romantic Summary Promises Card */}
-      <motion.div
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: { opacity: 1, y: 0 },
-        }}
-        className="w-full ios-glass p-4 rounded-2xl border border-[#D4AF37]/40 shadow-xl z-10 space-y-2 text-left mb-4"
-      >
-        <div className="flex items-center space-x-2 text-[#4A3B32] border-b border-[#D4AF37]/20 pb-2">
-          <Compass className="w-4 h-4 text-[#D4AF37]" />
-          <span className="font-serif-title font-bold text-xs uppercase tracking-wider">
-            Nuestras Próximas Metas
-          </span>
-        </div>
-        <ul className="text-xs text-[#4A3B32]/85 font-sans space-y-1.5 list-disc list-inside">
-          <li>Duelo culinario: tu asado contra mi lomo saltado.</li>
-          <li>Pijamada real con mascarillas y karaoke.</li>
-          <li>Capturar tus fotos perfectas en cada atardecer.</li>
-          <li>Nuestro hogar seguro con perritos, gatitos y patos.</li>
-        </ul>
-      </motion.div>
-
+      {/* Footer Branding Signature (Goal list excluded as requested) */}
       <motion.div
         variants={{
           hidden: { opacity: 0 },
           visible: { opacity: 1 },
         }}
-        className="flex items-center justify-center space-x-1 text-xs text-[#D4AF37] font-serif-title font-semibold z-10 pb-2"
+        className="flex items-center justify-center space-x-1.5 text-sm text-[#D4AF37] font-cursive font-bold z-10 pb-4"
       >
-        <Heart className="w-3.5 h-3.5 fill-[#D4AF37]" />
-        <span>Dante &amp; Angeles • Para Siempre</span>
-        <Heart className="w-3.5 h-3.5 fill-[#D4AF37]" />
+        <Heart className="w-4 h-4 fill-[#D4AF37]" />
+        <span className="text-base">Diego &amp; Angeles • Para Siempre</span>
+        <Heart className="w-4 h-4 fill-[#D4AF37]" />
       </motion.div>
     </motion.div>
   );
