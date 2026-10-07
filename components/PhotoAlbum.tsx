@@ -27,44 +27,44 @@ const SLIDES: PhotoSlide[] = [
   {
     id: 2,
     imageSrc: "/photos/regalo-delivery.png",
-    caption: "El detalle más lindo. Tú cuidando de mí a la distancia.",
+    caption: "Tú cuidando de mí a la distancia. Tienes un corazón precioso.",
     type: 'photo',
-    subtitle: "A la Distancia",
+    subtitle: "Tu Lindo Corazón",
   },
   {
     id: 3,
     imageSrc: "/photos/primera-foto.png",
     caption: "Nuestra primera foto juntos... mi foto favorita de la chica más hermosa.",
     type: 'photo',
-    subtitle: "Primera Foto",
+    subtitle: "Primera Foto Juntos",
   },
   {
     id: 4,
     imageSrc: "/photos/beso-cachete.png",
-    caption: "Llenándote de besitos, porque te lo mereces todo.",
+    caption: "Llenándote de besitos, porque me haces inmensamente feliz.",
     type: 'photo',
-    subtitle: "Besitos",
+    subtitle: "Inmensamente Feliz",
   },
   {
     id: 5,
     imageSrc: "/photos/abrazados-sonriendo.png",
-    caption: "Mi lugar seguro eres tú.",
+    caption: "Mi lugar seguro eres tú. La tranquilidad que siento a tu lado es única.",
     type: 'photo',
     subtitle: "Mi Lugar Seguro",
   },
   {
     id: 6,
     imageSrc: "/photos/abrazados-juntos.png",
-    caption: "Apaciguando tu caos.",
+    caption: "No hay momento en que no admire lo perfecta que eres.",
     type: 'photo',
-    subtitle: "Juntos Siempre",
+    subtitle: "Admirable & Perfecta",
   },
   {
     id: 7,
     imageSrc: "/photos/selfie-cuarto.png",
-    caption: "Construyendo nuestra historia oficial.",
+    caption: "Construyendo nuestra historia oficial, siendo el hombre más afortunado.",
     type: 'photo',
-    subtitle: "Nuestra Historia",
+    subtitle: "El Hombre Más Afortunado",
   },
   {
     id: 8,
@@ -103,13 +103,13 @@ export const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ onNext }) => {
     >
       {/* Top Header */}
       <div className="w-full text-center space-y-1 pt-2">
-        <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#4A3B32]">
-          <Camera className="w-3.5 h-3.5 text-[#D4AF37]" />
-          <span className="text-xs font-serif-title font-semibold tracking-wider uppercase">
+        <div className="inline-flex items-center space-x-1.5 px-3.5 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#4A3B32]">
+          <Camera className="w-4 h-4 text-[#D4AF37]" />
+          <span className="text-xs font-sans-ui font-semibold tracking-wider uppercase">
             NUESTROS RECUERDOS ({currentIndex + 1}/{SLIDES.length})
           </span>
         </div>
-        <h2 className="font-serif-title text-[#4A3B32] text-xl font-bold">
+        <h2 className="font-serif-title text-[#4A3B32] text-2xl font-bold">
           Álbum Fotográfico
         </h2>
       </div>
@@ -123,7 +123,7 @@ export const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ onNext }) => {
             animate={{ opacity: 1, scale: 1, rotate: currentIndex % 2 === 0 ? -1 : 1 }}
             exit={{ opacity: 0, scale: 0.9, rotate: 0 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
-            className="w-full max-w-[320px] bg-white rounded-xl shadow-2xl p-4 border border-[#D4AF37]/35 flex flex-col items-center space-y-3 relative"
+            className="w-full max-w-[325px] bg-white rounded-xl shadow-2xl p-4 border border-[#D4AF37]/35 flex flex-col items-center space-y-3 relative"
           >
             {/* Washi tape sticker at top */}
             <div className="absolute -top-3 w-20 h-6 bg-[#D4AF37]/25 backdrop-blur-xs rounded-xs transform -rotate-1 border border-white/70 shadow-xs" />
@@ -132,13 +132,11 @@ export const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ onNext }) => {
             {slide.type === 'photo' ? (
               <div className="w-full aspect-[4/3] rounded-lg bg-[#FDFBF7] border border-[#4A3B32]/10 overflow-hidden relative shadow-inner flex items-center justify-center">
                 {slide.imageSrc ? (
-                  /* Real Photo image */
                   <img
                     src={slide.imageSrc}
                     alt={slide.caption}
                     className="w-full h-full object-cover rounded-lg"
                     onError={(e) => {
-                      // Fallback if image path has different extension
                       const target = e.currentTarget;
                       if (target.src.endsWith('.png')) {
                         target.src = target.src.replace('.png', '.jpg');
@@ -157,9 +155,9 @@ export const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ onNext }) => {
               </div>
             ) : (
               /* Blank Page (Slide 8) with golden message */
-              <div className="w-full min-h-[190px] rounded-lg bg-gradient-to-br from-[#FFFDF9] to-[#FDFBF7] border-2 border-dashed border-[#D4AF37]/50 flex flex-col items-center justify-center p-5 text-center shadow-inner">
+              <div className="w-full min-h-[200px] rounded-lg bg-gradient-to-br from-[#FFFDF9] to-[#FDFBF7] border-2 border-dashed border-[#D4AF37]/50 flex flex-col items-center justify-center p-5 text-center shadow-inner">
                 <Sparkles className="w-8 h-8 text-[#D4AF37] mb-2" />
-                <p className="text-xs font-serif-title italic text-[#4A3B32] leading-relaxed font-semibold">
+                <p className="text-sm sm:text-base font-serif-title italic text-[#4A3B32] leading-relaxed font-semibold">
                   {slide.caption}
                 </p>
               </div>
@@ -167,18 +165,18 @@ export const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ onNext }) => {
 
             {/* Polaroid Bottom Caption */}
             {slide.type === 'photo' && (
-              <p className="font-serif-title text-center text-xs sm:text-sm font-semibold text-[#4A3B32] italic leading-snug px-1">
+              <p className="font-serif-title text-center text-sm sm:text-base font-semibold text-[#4A3B32] italic leading-snug px-1">
                 &ldquo;{slide.caption}&rdquo;
               </p>
             )}
 
             {/* Slide Index Progress Dots */}
-            <div className="flex space-x-1 pt-1">
+            <div className="flex space-x-1.5 pt-1">
               {SLIDES.map((_, i) => (
                 <div
                   key={i}
-                  className={`w-1.5 h-1.5 rounded-full transition-all ${
-                    i === currentIndex ? 'bg-[#D4AF37] w-4' : 'bg-[#4A3B32]/20'
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    i === currentIndex ? 'bg-[#D4AF37] w-5' : 'bg-[#4A3B32]/20'
                   }`}
                 />
               ))}
@@ -192,10 +190,10 @@ export const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ onNext }) => {
         <button
           onClick={handlePrevSlide}
           disabled={currentIndex === 0}
-          className={`py-3 px-4 rounded-xl border flex items-center justify-center font-serif-title font-semibold text-xs transition-all ${
+          className={`py-3.5 px-5 rounded-xl border flex items-center justify-center font-sans-ui font-semibold text-sm transition-all ${
             currentIndex === 0
               ? 'opacity-40 border-gray-300 text-gray-400 cursor-not-allowed'
-              : 'border-[#4A3B32]/20 text-[#4A3B32] bg-white/70 active:scale-95 cursor-pointer'
+              : 'border-[#4A3B32]/20 text-[#4A3B32] bg-white/80 active:scale-95 cursor-pointer shadow-xs'
           }`}
         >
           <ChevronLeft className="w-4 h-4 mr-1" />
@@ -206,10 +204,10 @@ export const PhotoAlbum: React.FC<PhotoAlbumProps> = ({ onNext }) => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.96 }}
           onClick={handleNextSlide}
-          className="flex-1 py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#4A3B32] to-[#634E43] text-white font-serif-title font-semibold text-sm shadow-xl flex items-center justify-center space-x-2 border border-[#D4AF37]/40 cursor-pointer"
+          className="flex-1 py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#4A3B32] to-[#634E43] text-white font-serif-title font-semibold text-base shadow-xl flex items-center justify-center space-x-2 border border-[#D4AF37]/40 cursor-pointer"
         >
           <span>{currentIndex === SLIDES.length - 1 ? "Continuar" : "Siguiente"}</span>
-          <ChevronRight className="w-4 h-4 text-[#D4AF37]" />
+          <ChevronRight className="w-5 h-5 text-[#D4AF37]" />
         </motion.button>
       </div>
     </motion.div>
