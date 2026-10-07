@@ -8,8 +8,8 @@ interface LoveLetterProps {
   onNext: () => void;
 }
 
-const LETTER_TEXT =
-  "Angeles. Si me hubieran dicho hace un mes que una serendipia me traería hasta aquí, probablemente lo habría sobreanalizado. Llegaste cuando no buscaba nada, pero me di cuenta de que eras exactamente lo que me faltaba. Me encanta todo de ti. Tu dedicación, tu transparencia, esa intensidad hermosa con la que vives y cómo te ves cuando sonríes. Gracias por el tiempo compartido, las largas madrugadas hablando y la impaciencia tan linda de querer vernos. Sé que a veces la mente hace ruido y los miedos aparecen. Pero quiero que sepas algo: a pesar de cualquier caos, siempre voy a buscar sobreexplicarte todo. Voy a cuidar de ti, a darte la seguridad que mereces, a apaciguar tus enredos y asegurarme de que estés bien. No hay cosa que no haría por ti. Quiero que nuestro futuro sea viajando, haciendo lo que a ti te guste, construyendo algo firme que nada pueda quebrar.";
+const INTENSE_LETTER_TEXT =
+  "Mi amada Angeles, no sé por dónde empezar... siento que hay tanto por decir. Para empezar, quisiera mencionar que eres una chica única, bella, preciosa. Eres una princesita para mí. Mi niña, mi linda Angeles... hermosa. Llegaste cuando no buscaba nada, pero me di cuenta de que eras exactamente lo que me faltaba para que mi vida estuviera completa. Me encanta todo de ti y me maravillo contigo todos los días.\n\nSé que a veces la mente hace ruido y los miedos aparecen. Pero quiero que sepas algo: a pesar de cualquier caos, siempre voy a buscar sobreexplicarte todo, voy a cuidar de ti, a darte la seguridad que mereces, a apaciguar tus enredos y a asegurarme de que estés bien y seas inmensamente feliz siempre. No hay cosa que no haría por ti, porque mi paz la encuentro cuando te veo sonreír. Eres mi prioridad y quiero amarte con toda mi alma.";
 
 export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
   const [displayedText, setDisplayedText] = useState("");
@@ -19,11 +19,10 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
   useEffect(() => {
     let index = 0;
     const timer = setInterval(() => {
-      if (index < LETTER_TEXT.length) {
-        setDisplayedText(LETTER_TEXT.substring(0, index + 1));
+      if (index < INTENSE_LETTER_TEXT.length) {
+        setDisplayedText(INTENSE_LETTER_TEXT.substring(0, index + 1));
         index++;
 
-        // Auto-scroll down as text grows
         if (letterRef.current) {
           letterRef.current.scrollTop = letterRef.current.scrollHeight;
         }
@@ -31,13 +30,13 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
         setIsCompleted(true);
         clearInterval(timer);
       }
-    }, 30); // Strict 30ms per character requirement
+    }, 28); // Fast 28ms typewriter reveal
 
     return () => clearInterval(timer);
   }, []);
 
   const handleSkip = () => {
-    setDisplayedText(LETTER_TEXT);
+    setDisplayedText(INTENSE_LETTER_TEXT);
     setIsCompleted(true);
   };
 
@@ -54,7 +53,7 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
         <div className="flex items-center space-x-2">
           <Heart className="w-5 h-5 text-[#D4AF37] fill-[#D4AF37]" />
           <span className="font-serif-title text-[#4A3B32] font-semibold text-lg">
-            Carta para ti
+            Para Mi Princesita
           </span>
         </div>
 
@@ -69,17 +68,17 @@ export const LoveLetter: React.FC<LoveLetterProps> = ({ onNext }) => {
       </div>
 
       {/* Main Letter Card */}
-      <div className="relative w-full flex-1 my-3 overflow-hidden rounded-2xl ios-glass border border-[#D4AF37]/30 shadow-2xl flex flex-col">
-        {/* Subtle Decorative Gold Corner Lines */}
-        <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#D4AF37]/50 rounded-tl" />
-        <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[#D4AF37]/50 rounded-tr" />
-        <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#D4AF37]/50 rounded-bl" />
-        <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#D4AF37]/50 rounded-br" />
+      <div className="relative w-full flex-1 my-3 overflow-hidden rounded-2xl ios-glass border border-[#D4AF37]/35 shadow-2xl flex flex-col">
+        {/* Decorative Gold Corners */}
+        <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#D4AF37]/60 rounded-tl" />
+        <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[#D4AF37]/60 rounded-tr" />
+        <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#D4AF37]/60 rounded-bl" />
+        <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#D4AF37]/60 rounded-br" />
 
         {/* Scrollable Letter Content */}
         <div
           ref={letterRef}
-          className="flex-1 p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-[#D4AF37]/30 text-[#4A3B32] font-sans text-base leading-relaxed tracking-wide space-y-4"
+          className="flex-1 p-6 overflow-y-auto scrollbar-thin scrollbar-thumb-[#D4AF37]/30 text-[#4A3B32] font-sans text-base leading-relaxed tracking-wide"
         >
           <p className="whitespace-pre-line font-medium">
             {displayedText}
