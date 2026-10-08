@@ -22,17 +22,25 @@ const SUNFLOWER_COLORS = [
 
 const BASE_PATH = "/ad-memories";
 
-export const FinalCelebration: React.FC = () => {
-  const [acceptedDate, setAcceptedDate] = useState<Date>(new Date());
+interface FinalCelebrationProps {
+  initialDate?: string | null;
+}
+
+export const FinalCelebration: React.FC<FinalCelebrationProps> = ({ initialDate }) => {
+  const [acceptedDate, setAcceptedDate] = useState<Date>(
+    initialDate ? new Date(initialDate) : new Date()
+  );
   const [elapsed, setElapsed] = useState<TimeElapsed>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [windowDimensions, setWindowDimensions] = useState({ width: 390, height: 844 });
   const [isConfettiActive, setIsConfettiActive] = useState(true);
 
   useEffect(() => {
-    // Quiet POST to Supabase table: milestones, type: proposal
-    recordProposalAcceptance().then((timestamp) => {
-      setAcceptedDate(timestamp);
-    });
+    if (!initialDate) {
+      // Quiet POST fallback if not provided
+      recordProposalAcceptance().then((timestamp) => {
+        setAcceptedDate(timestamp);
+      });
+    }
 
     if (typeof window !== 'undefined') {
       setWindowDimensions({
@@ -40,7 +48,7 @@ export const FinalCelebration: React.FC = () => {
         height: window.innerHeight,
       });
     }
-  }, []);
+  }, [initialDate]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -119,7 +127,7 @@ export const FinalCelebration: React.FC = () => {
           }}
           className={`${fontPlayfair.className} text-3xl sm:text-4xl font-extrabold text-[#4A3B32] tracking-wide`}
         >
-          Sabía que dirías que sí. ❤️
+          {initialDate ? "¡Nuestra historia continúa! ❤️" : "Sabía que dirías que sí. ❤️"}
         </motion.h1>
 
         <motion.p
@@ -129,7 +137,9 @@ export const FinalCelebration: React.FC = () => {
           }}
           className={`${fontGreatVibes.className} text-2xl sm:text-3xl text-[#4A3B32] px-3 leading-relaxed font-bold`}
         >
-          &ldquo;Eres mi niña hermosa, mi princesita y mi lugar seguro. Te prometo cuidar de ti con toda mi alma siempre.&rdquo;
+          {initialDate
+            ? "“Cada segundo a tu lado me confirma que eres el amor de mi vida. Gracias por hacerme el hombre más feliz.”"
+            : "“Eres mi niña hermosa, mi princesita y mi lugar seguro. Te prometo cuidar de ti con toda mi alma siempre.”"}
         </motion.p>
       </div>
 

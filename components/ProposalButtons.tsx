@@ -170,7 +170,14 @@ export const ProposalButtons: React.FC<ProposalButtonsProps> = ({ onAccept }) =>
                 }}
                 whileHover={{ scale: yesScale * 1.04 }}
                 whileTap={{ scale: yesScale * 0.95 }}
-                onClick={onAccept}
+                onClick={async () => {
+                  try {
+                    await fetch('/api/accept-proposal', { method: 'POST' });
+                  } catch (e) {
+                    console.error('Failed to post proposal acceptance:', e);
+                  }
+                  onAccept();
+                }}
                 className={`${fontPlayfair.className} w-full py-4 px-8 rounded-2xl bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#D4AF37] text-[#4A3B32] font-extrabold text-xl sm:text-2xl shadow-2xl flex items-center justify-center space-x-2 border border-white/80 cursor-pointer active:scale-95 transition-all`}
               >
                 <Sparkles className="w-5 h-5 text-[#4A3B32]" />
