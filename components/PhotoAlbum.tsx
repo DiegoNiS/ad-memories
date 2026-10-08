@@ -16,7 +16,7 @@ interface PhotoSlide {
   subtitle?: string;
 }
 
-const BASE_PATH = "/ad-memories";
+const BASE_PATH = "";
 
 const SLIDES: PhotoSlide[] = [
   {

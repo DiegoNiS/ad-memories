@@ -20,7 +20,7 @@ const SUNFLOWER_COLORS = [
   '#FEF3C7',
 ];
 
-const BASE_PATH = "/ad-memories";
+const BASE_PATH = "";
 
 interface FinalCelebrationProps {
   initialDate?: string | null;
