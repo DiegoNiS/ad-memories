@@ -211,18 +211,47 @@ export const FinalCelebration: React.FC<FinalCelebrationProps> = ({ initialDate 
         </div>
       </motion.div>
 
-      {/* Footer Branding Signature (Goal list excluded as requested) */}
-      <motion.div
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1 },
-        }}
-        className={`${fontGreatVibes.className} flex items-center justify-center space-x-2 text-3xl text-[#D4AF37] font-bold z-10 pb-4`}
-      >
-        <Heart className="w-5 h-5 fill-[#D4AF37]" />
-        <span>Diego &amp; Angeles • Para Siempre</span>
-        <Heart className="w-4 h-4 fill-[#D4AF37]" />
-      </motion.div>
+        {/* Footer Signature & Exact Timestamp */}
+        <div className="flex flex-col items-center space-y-1 z-10 pb-14">
+          <div className={`${fontGreatVibes.className} flex items-center justify-center space-x-2 text-3xl text-[#D4AF37] font-bold`}>
+            <Heart className="w-5 h-5 fill-[#D4AF37]" />
+            <span>Diego &amp; Angeles • Para Siempre</span>
+            <Heart className="w-4 h-4 fill-[#D4AF37]" />
+          </div>
+          {acceptedDate && (
+            <p className="text-[11px] font-sans-ui text-[#D4AF37] opacity-90 font-medium">
+              ✦ Oficial desde el {acceptedDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })} a las {acceptedDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true })} ✦
+            </p>
+          )}
+        </div>
+
+      {/* Yellow Grass Pasture & Smart Sanrio Animation */}
+      <div className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none z-10 overflow-hidden">
+        <svg className="absolute bottom-0 inset-x-0 w-full h-12 fill-[#E8D48A]/50 z-10" viewBox="0 0 400 40" preserveAspectRatio="none">
+          <path d="M 0 40 Q 30 15 60 40 Q 90 20 120 40 Q 150 10 180 40 Q 210 25 240 40 Q 270 15 300 40 Q 330 20 360 40 Q 380 10 400 40 Z" />
+        </svg>
+
+        {/* Animated Cinnamoroll & Pompompurin in final screen */}
+        <div className="w-20 h-20 absolute bottom-2 left-6 z-0 flex items-end justify-center">
+          <motion.img
+            animate={{ rotate: [-4, 4, -4] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            src="/extras/Cinnamoroll.png"
+            alt="Cinnamoroll"
+            className="w-full h-auto object-contain drop-shadow-md"
+          />
+        </div>
+
+        <div className="w-20 h-20 absolute bottom-1 right-6 z-0 flex items-end justify-center">
+          <motion.img
+            animate={{ rotate: [4, -4, 4] }}
+            transition={{ duration: 2.7, repeat: Infinity, ease: "easeInOut" }}
+            src="/extras/Pompompurin.png"
+            alt="Pompompurin"
+            className="w-full h-auto object-contain drop-shadow-md"
+          />
+        </div>
+      </div>
     </motion.div>
   );
 };
