@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postinstall": "prisma generate",
     "start": "next start",
     "lint": "eslint",
     "db:push": "dotenv -e .env.local -- npx prisma db push",
@@ -12,6 +13,7 @@
     "deploy": "gh-pages -d out"
   },
   "dependencies": {
+    "@prisma/client": "5.18.0",
     "@supabase/supabase-js": "^2.117.2",
     "canvas-confetti": "^1.9.4",
     "framer-motion": "^14.0.0",
